@@ -1,7 +1,7 @@
 import datetime
 import secrets
 import hashlib
-import tkinter as messagebox
+
 
 
 '''
@@ -23,19 +23,19 @@ class CatalogoMaterialesReciclaje:
     '''    
     def crear_material_reciclaje(self, nombreMaterial, unidad, valorUnitario, descripcion):
         if not 5 <= len(nombreMaterial) <= 50:
-            messagebox.showerror("Error", "El nombre del material debe tener entre 5 y 50 caracteres")
+            raise ValueError("Error El nombre del material debe tener entre 5 y 50 caracteres")
             return False
         
         if unidad not in ["kilogramo","litro","unidad"]:
-            messagebox.showerror("Error", "La unidad del material no es válida")
+            raise ValueError("Error", "La unidad del material no es válida")
             return False
         
         if not 0 < valorUnitario < 100000:
-            messagebox.showerror("Error", "El valor unitario debe ser mayor a 0 y menor a 100000")
+            raise ValueError("Error", "El valor unitario debe ser mayor a 0 y menor a 100000")
             return False
         
         if len(descripcion) > 1000:
-            messagebox.showerror("Error", "La descripción del material no puede tener más de 1000 caracteres")
+            raise ValueError("Error", "La descripción del material no puede tener más de 1000 caracteres")
             return False
         
         estado = "Activo" 
