@@ -27,7 +27,7 @@ def crear_material():
 def actualizar_lista():
     lista_text.delete("1.0", tk.END)
     for material in catalogo.materiales:
-        lista_text.insert(tk.END, f"{material}\n")
+        lista_text.insert(tk.END, f"{material} \n")
 
 
 
