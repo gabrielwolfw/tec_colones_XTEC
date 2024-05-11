@@ -1,0 +1,86 @@
+import tkinter as tk
+from tkinter import messagebox
+
+class CreateSede:
+    def __init__(self, master):
+        self.master = master
+        master.title("Crear Sede")
+        master.geometry("300x200")
+
+        # Create labels and entry fields
+        self.nombre_label = tk.Label(master, text="Nombre de la sede:")
+        self.nombre_label.pack()
+        self.nombre_entry = tk.Entry(master, width=30)
+        self.nombre_entry.pack()
+
+        self.ubicacion_label = tk.Label(master, text="Ubicación (provincia):")
+        self.ubicacion_label.pack()
+        self.ubicacion_entry = tk.Entry(master, width=30)
+        self.ubicacion_entry.pack()
+
+        self.numero_contacto_label = tk.Label(master, text="Número de contacto:")
+        self.numero_contacto_label.pack()
+        self.numero_contacto_entry = tk.Entry(master, width=30)
+        self.numero_contacto_entry.pack()
+
+        self.estado_label = tk.Label(master, text="Estado (activo/inactivo):")
+        self.estado_label.pack()
+        self.estado_var = tk.StringVar()
+        self.estado_var.set("activo")
+        self.estado_option = tk.OptionMenu(master, self.estado_var, "activo", "inactivo")
+        self.estado_option.pack()
+
+        # Create button to create sede
+        self.create_button = tk.Button(master, text="Crear Sede", command=self.create_sede)
+        self.create_button.pack()
+
+    
+
+    
+    def validate_input(self, nombre, ubicacion, numero_contacto):
+        if len(nombre) < 5 or len(nombre) > 50:
+            messagebox.showerror("Error", "El nombre de la sede debe tener entre 5 y 50 caracteres")
+            return False
+
+        if len(ubicacion) < 5 or len(ubicacion) > 50:
+            messagebox.showerror("Error", "La ubicación debe tener entre 5 y 50 caracteres")
+            return False
+
+        if not 0 < numero_contacto < 100000:
+            messagebox.showerror("Error", "El número de contacto debe ser un número")
+            return False
+
+        return True
+
+    def create_sede(self):
+        nombre = self.nombre_entry.get()
+        ubicacion = self.ubicacion_entry.get()
+        numero_contacto = self.numero_contacto_entry.get()
+        estado = self.estado_var.get()
+
+        
+        if  numero_contacto.isdigit():
+            numero_contacto = int(numero_contacto)
+            if CreateSede:
+            
+                messagebox.showinfo("Éxito", "Material creado exitosamente")
+        else:
+            messagebox.showerror("Error", "El valor unitario debe ser un número entero")
+
+
+
+        if not nombre or not ubicacion or not numero_contacto:
+            messagebox.showerror("Error", "Por favor, complete todos los campos")
+            return
+
+        # Create sede logic here
+        print(f"Sede creada: {nombre}, {ubicacion}, {numero_contacto}, {estado}")
+
+        # Clear entry fields
+        self.nombre_entry.delete(0, tk.END)
+        self.ubicacion_entry.delete(0, tk.END)
+        self.numero_contacto_entry.delete(0, tk.END)
+
+root = tk.Tk()
+my_gui = CreateSede(root)
+root.mainloop()
