@@ -46,8 +46,8 @@ class CreateSede:
             messagebox.showerror("Error", "La ubicación debe tener entre 5 y 50 caracteres")
             return False
 
-        if not 0 < numero_contacto < 100000:
-            messagebox.showerror("Error", "El número de contacto debe ser un número")
+        if not numero_contacto.isdigit() or not 0 < int(numero_contacto) < 100000:
+            messagebox.showerror("Error", "El número de contacto debe ser un número, y debe de estar entre 1 y 100000")
             return False
 
         return True
@@ -59,22 +59,22 @@ class CreateSede:
         estado = self.estado_var.get()
 
         
-        if  numero_contacto.isdigit():
-            numero_contacto = int(numero_contacto)
-            if CreateSede:
-            
-                messagebox.showinfo("Éxito", "Material creado exitosamente")
-        else:
-            messagebox.showerror("Error", "El valor unitario debe ser un número entero")
-
-
-
-        if not nombre or not ubicacion or not numero_contacto:
+        if not (nombre and ubicacion and numero_contacto):
             messagebox.showerror("Error", "Por favor, complete todos los campos")
             return
 
-        # Create sede logic here
-        print(f"Sede creada: {nombre}, {ubicacion}, {numero_contacto}, {estado}")
+        if not self.validate_input(nombre, ubicacion, numero_contacto):
+            return
+
+        try:
+            numero_contacto = int(numero_contacto)
+            # Create sede logic here
+            print(f"Sede creada: {nombre}, {ubicacion}, {numero_contacto}, {estado}")
+            messagebox.showinfo("Éxito", "Material creado exitosamente")
+        except ValueError:
+            messagebox.showerror("Error", "El número de contacto debe ser un número entero")
+
+        
 
         # Clear entry fields
         self.nombre_entry.delete(0, tk.END)
