@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-
+import CrearSede
 import CatalogoMateriales 
 
 
@@ -75,6 +75,9 @@ if __name__ == "__main__":
 
     lista_text = tk.Text(root, height=10, width=200)
     lista_text.grid(row=6, column=0, columnspan=2, padx=5, pady=5)
+
+    crear_button = tk.Button(root, text="Crear Sede", command=lambda: CrearSede.__init__)
+    crear_button.grid(row=8, column=0, columnspan=2, padx=5, pady=5)
 
 
     # Actualizar la lista inicial
