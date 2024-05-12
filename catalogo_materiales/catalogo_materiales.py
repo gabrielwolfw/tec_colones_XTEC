@@ -30,6 +30,7 @@ class CatalogoMaterialesReciclaje:
             messagebox.showerror("Error", "La unidad del material no es válida")
             return False
         
+        valorUnitario = int(valorUnitario)
         if not 0 < valorUnitario < 100000:
             messagebox.showerror("Error", "El valor unitario debe ser mayor a 0 y menor a 100000")
             return False
