@@ -1,6 +1,6 @@
 from tkinter import messagebox
 
-class Sede:
+class Sedes:
     def __init__(self):
         self.sedes = []
         self.identificadores_existentes = set()
@@ -30,4 +30,8 @@ class Sede:
             "Estado": estado
         }
         self.agregar_sede(sede)
+        return True
+    
+    def agregar_sede(self, sede):
+        self.sedes.append(sede)
         return True

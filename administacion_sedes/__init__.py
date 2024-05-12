@@ -1,1 +1,2 @@
-from .sedes import Sede
+from .sedes import Sedes
+from .centrosacopio import CentrosAcopio
