@@ -3,6 +3,8 @@ import tkinter as tk
 
 
 from catalogo_materiales.catalogo_materiales import CatalogoMaterialesReciclaje
+
+
 #Instanacia reutilizable del catalogo de materiales
 catalogo_materiales = CatalogoMaterialesReciclaje()
 
@@ -20,3 +22,4 @@ def actualizar_lista(lista_text):
     lista_text.delete("1.0", tk.END)
     for material in catalogo_materiales.materiales:
         lista_text.insert(tk.END, f"Material: {material}\n")
+

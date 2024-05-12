@@ -4,9 +4,6 @@ from tkinter import ttk, messagebox
 
 from pantallas import sedes_pantalla, centrosacopio_panatlla,catalogo_materiales_pantalla
 
-
-
-
 if __name__ == "__main__": 
     # Crear la ventana principal
     root = tk.Tk()

@@ -32,3 +32,9 @@ class CentrosAcopio:
         self.centros_acopio.append(centro_acopio)
         return True
     
+
+    def guardar_centro_acopio_base_datos(self):
+        with open('./base_datos/centrosacopio.txt','a') as file:
+            for centro_acopio in self.centros_acopio:
+                file.write(f"{centro_acopio}\n")
+    
