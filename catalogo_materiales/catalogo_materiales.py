@@ -1,7 +1,7 @@
 import datetime
 import secrets
 import hashlib
-
+from tkinter import messagebox
 
 
 '''
@@ -20,27 +20,28 @@ class CatalogoMaterialesReciclaje:
                 unidad (str): Unidad del material
                 valorUnitario (int): Valor unitario del material en Tec_Colones
                 descripcion (str): Descripción del material
-    '''    
-    def crear_material_reciclaje(self, nombreMaterial, unidad, valorUnitario, descripcion):
+    '''
+    def validacion_input_material(self, nombreMaterial, unidad, valorUnitario, descripcion):
         if not 5 <= len(nombreMaterial) <= 50:
-            raise ValueError("Error El nombre del material debe tener entre 5 y 50 caracteres")
+            messagebox.showerror("Error El nombre del material debe tener entre 5 y 50 caracteres")
             return False
         
         if unidad not in ["kilogramo","litro","unidad"]:
-            raise ValueError("Error", "La unidad del material no es válida")
+            messagebox.showerror("Error", "La unidad del material no es válida")
             return False
         
         if not 0 < valorUnitario < 100000:
-            raise ValueError("Error", "El valor unitario debe ser mayor a 0 y menor a 100000")
+            messagebox.showerror("Error", "El valor unitario debe ser mayor a 0 y menor a 100000")
             return False
         
         if len(descripcion) > 1000:
-            raise ValueError("Error", "La descripción del material no puede tener más de 1000 caracteres")
+            messagebox.showerror("Error", "La descripción del material no puede tener más de 1000 caracteres")
             return False
-        
+        return True
+    
+    def crear_material_reciclaje(self, nombreMaterial, unidad, valorUnitario, descripcion):
         estado = "Activo" 
         fechaCreacion = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        
         material = {
             "Material": nombreMaterial,
             "Unidad": unidad,
@@ -49,7 +50,6 @@ class CatalogoMaterialesReciclaje:
             "Fecha de creación": fechaCreacion,
             "Descripcion": descripcion
         }
-        
         self.agregar_material(material)
         return True
     
