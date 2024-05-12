@@ -1,11 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from pantallas.logica_catalogo_materiales_pntlla import crear_material,actualizar_lista,desactivar_material
-
-
-
-
-    
+from pantallas.logica_catalogo_materiales_pntlla import crear_material,actualizar_lista
 
 
 def catalogo_materiales_pantalla(root):
@@ -40,6 +35,8 @@ def catalogo_materiales_pantalla(root):
     descripcion_text.grid(row=3, column=1, padx=5, pady=5, sticky="w")
 
 
+    
+
     lista_label = tk.Label(catalogo_frame, text="Lista de materiales:")
     lista_label.grid(row=5, column=0, padx=5, pady=5, sticky="w")
 
@@ -58,10 +55,6 @@ def catalogo_materiales_pantalla(root):
                                                                                              lista_text))
     crear_button.grid(row=4, column=0, columnspan=2, padx=5, pady=5)
     actualizar_lista(lista_text)
-
-
-
-
 
     
 

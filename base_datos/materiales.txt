@@ -1,5 +1,0 @@
-{'Material': 'metal', 'Unidad': 'kilogramo', 'Valor unitario': '123', 'Estado': 'Activo', 'Fecha de creacion': '2024-05-12 01:24:41', 'Descripcion': 'prueba dos\n', 'Identificador': 'M-d931941dac3c'}
-{'Material': 'materaial', 'Unidad': 'kilogramo', 'Valor unitario': '123', 'Estado': 'Activo', 'Fecha de creacion': '2024-05-12 01:29:35', 'Descripcion': 'sdf\n', 'Identificador': 'M-50a7df8a42ad'}
-{'Material': 'madera', 'Unidad': 'kilogramo', 'Valor unitario': '30', 'Estado': 'Activo', 'Fecha de creacion': '2024-05-12 01:30:13', 'Descripcion': 'sucio\n', 'Identificador': 'M-a8988a4a75e7'}
-{'Material': 'opprre', 'Unidad': 'kilogramo', 'Valor unitario': '123', 'Estado': 'Activo', 'Fecha de creacion': '2024-05-12 01:42:51', 'Descripcion': 'verdad\n', 'Identificador': 'M-513cae014243'}
-{'Material': 'opprre', 'Unidad': 'kilogramo', 'Valor unitario': '123', 'Estado': 'Inactivo', 'Fecha de creacion': '2024-05-12 01:42:51', 'Descripcion': 'verdad\n', 'Identificador': 'M-513cae014243'}

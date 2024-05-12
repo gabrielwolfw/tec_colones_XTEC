@@ -2,7 +2,6 @@ import datetime
 import secrets
 import hashlib
 from tkinter import messagebox
-import os
 
 
 '''
@@ -49,11 +48,10 @@ class CatalogoMaterialesReciclaje:
             "Unidad": unidad,
             "Valor unitario": valorUnitario,
             "Estado": estado,
-            "Fecha de creacion": fechaCreacion,
+            "Fecha de creación": fechaCreacion,
             "Descripcion": descripcion
         }
         self.agregar_material(material)
-        self.guardar_material_base_datos()
         return True
     
     '''
@@ -86,9 +84,3 @@ class CatalogoMaterialesReciclaje:
             if key_id not in self.identificadores_existentes:
                 return key_id
         
-    def guardar_material_base_datos(self):
-        with open('./base_datos/materiales.txt','a') as file:
-            for material in self.materiales:
-                file.write(f"{material}\n")
-
-
