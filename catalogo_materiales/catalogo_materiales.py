@@ -23,7 +23,7 @@ class CatalogoMaterialesReciclaje:
     '''
     def validacion_input_material(self, nombreMaterial, unidad, valorUnitario, descripcion):
         if not 5 <= len(nombreMaterial) <= 50:
-            messagebox.showerror("Error El nombre del material debe tener entre 5 y 50 caracteres")
+            messagebox.showerror("Error", "El nombre del material debe tener entre 5 y 50 caracteres")
             return False
         
         if unidad not in ["kilogramo","litro","unidad"]:
