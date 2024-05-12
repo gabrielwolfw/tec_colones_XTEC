@@ -1,6 +1,4 @@
 from tkinter import messagebox
-from tkinter import ttk
-import tkinter as tk
 
 from administacion_sedes import Sedes
 

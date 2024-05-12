@@ -7,7 +7,7 @@ class Sedes:
 
 
     def validar_input_sede(self, nombre, ubicacion, numero_contacto):
-        if not 5 <= len(nombre) <= 50:
+        if not 1 <= len(nombre) <= 50:
             messagebox.showerror("Error", "El nombre de la sede debe tener entre 5 y 50 caracteres")
             return False
 
@@ -15,8 +15,8 @@ class Sedes:
             messagebox.showerror("Error", "La ubicación debe tener entre 5 y 50 caracteres")
             return False
 
-        if not numero_contacto.isdigit() or not 0 < int(numero_contacto) < 100000:
-            messagebox.showerror("Error", "El número de contacto debe ser un número, y debe de estar entre 1 y 100000")
+        if not numero_contacto.isdigit() or not 1000000 < int(numero_contacto) < 100000000:
+            messagebox.showerror("Error", "El número de contacto debe tener 8 dígitos")
             return False
         return True
 

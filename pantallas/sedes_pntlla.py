@@ -1,6 +1,6 @@
 from tkinter import messagebox
 import tkinter as tk
-import pantallas.logica_sedes_ as logica_sedes_
+import pantallas.logica_sedes_pntlla as logica_sedes_pntlla
 
 def sedes_pantalla(root):
     sede_frame = tk.Toplevel(root)
@@ -31,7 +31,7 @@ def sedes_pantalla(root):
     estado_option.pack()
 
     # Create button to create sede
-    create_button = tk.Button(sede_frame, text="Crear Sede", command=lambda: logica_sedes_.crear_sede(
+    create_button = tk.Button(sede_frame, text="Crear Sede", command=lambda: logica_sedes_pntlla.crear_sede(
         nombre_entry.get(), ubicacion_entry.get(), numero_contacto_entry.get(), estado_var.get()))
     create_button.pack()
 

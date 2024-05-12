@@ -3,29 +3,27 @@ from tkinter import messagebox
 class CentrosAcopio:
     def __init__(self):
         self.centros_acopio = []
+        self.sedes_existentes = set()
         self.identificadores_existentes = set()
     
-    def validar_input_centro_acopio(self, nombre, ubicacion, numero_contacto):
-        if not 5 <= len(nombre) <= 50:
-            messagebox.showerror("Error", "El nombre del centro de acopio debe tener entre 5 y 50 caracteres")
+    def validar_input_centro_acopio(self, sede, numero_contacto,identificador):
+        if not sede in self.sedes_existentes:
+            messagebox.showerror("Error", "La sede no existe")
             return False
-
-        if not 5 <= len(ubicacion) <= 50:
-            messagebox.showerror("Error", "La ubicación debe tener entre 5 y 50 caracteres")
+        if not numero_contacto.isdigit() or not 1000000 < int(numero_contacto) < 100000000:
+            messagebox.showerror("Error", "El número de contacto debe ser un número debe tener 8 dígitos")
             return False
-
-        if not numero_contacto.isdigit() or not 0 < int(numero_contacto) < 100000:
-            messagebox.showerror("Error", "El número de contacto debe ser un número, y debe de estar entre 1 y 100000")
+        if identificador in self.identificadores_existentes:
+            messagebox.showerror("Error", "El identificador ya existe")
             return False
         return True
     
-    def crear_centro_acopio(self, nombre, ubicacion, numero_contacto, estado):
-        self.validar_input_centro_acopio(nombre, ubicacion, numero_contacto)
+    def crear_centro_acopio(self, sede, numero_contacto, identificador):
+        self.validar_input_centro_acopio(sede, numero_contacto, identificador)
         centro_acopio = {
-            "Nombre": nombre,
-            "Ubicación": ubicacion,
+            "Sede": sede,
             "Número de contacto": numero_contacto,
-            "Estado": estado
+            "Identificador": identificador
         }
         self.agregar_centro_acopio(centro_acopio)
         return True
