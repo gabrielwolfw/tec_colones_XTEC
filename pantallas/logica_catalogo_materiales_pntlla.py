@@ -7,7 +7,6 @@ from catalogo_materiales.catalogo_materiales import CatalogoMaterialesReciclaje
 catalogo_materiales = CatalogoMaterialesReciclaje()
 
 def crear_material(nombre,nombre_entry,unidad,unidad_combobox,valor,valor_entry,descripcion,descripcion_text,lista_text):
-    catalogo = CatalogoMaterialesReciclaje()
     if catalogo_materiales.validacion_input_material(nombre,unidad,valor,descripcion):
         catalogo_materiales.crear_material_reciclaje(nombre,unidad,valor,descripcion)
         actualizar_lista(lista_text)
