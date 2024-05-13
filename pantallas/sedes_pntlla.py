@@ -3,11 +3,20 @@ from tkinter import messagebox
 import pantallas.logica_sedes_pntlla as logica_sedes_pntlla
 
 def sedes_pantalla(root):
+    # Ocultar la ventana principal
+    root.withdraw()
     sede_frame = tk.Toplevel(root)
     sede_frame.title("Administración de Sedes")
     sede_frame.geometry("400x400")
     sede_frame.resizable(False, False)
     sede_frame.configure(bg="#F1F6F9")
+
+    def close_window():
+        # Mostrar nuevamente la ventana principal
+        root.deiconify()
+        sede_frame.destroy()
+
+    sede_frame.protocol("WM_DELETE_WINDOW", close_window)
 
     nombre_label = tk.Label(sede_frame, text="Nombre de la sede:", font=("Bahnschrift Condensed", 14), bg="#A5C0DD")
     nombre_label.place(x=20, y=20)

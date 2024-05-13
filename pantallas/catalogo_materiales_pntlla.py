@@ -4,11 +4,21 @@ from pantallas.logica_catalogo_materiales_pntlla import crear_material,actualiza
 
 
 def catalogo_materiales_pantalla(root):
+    # Ocultar la ventana principal
+    root.withdraw()
+
     catalogo_frame = tk.Toplevel(root)
     catalogo_frame.title("Crear material de reciclaje")
     catalogo_frame.geometry("815x430")
     catalogo_frame.resizable(True, True)
     catalogo_frame.configure(bg="#F1F6F9")
+
+    def close_window():
+        # Mostrar nuevamente la ventana principal
+        root.deiconify()
+        catalogo_frame.destroy()
+
+    catalogo_frame.protocol("WM_DELETE_WINDOW", close_window)
 
     nombre_label = tk.Label(catalogo_frame, text="Nombre del material:", font=("Bahnschrift Condensed", 14),bg="#A5C0DD")
     nombre_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
