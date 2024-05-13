@@ -1,5 +1,5 @@
 from .sedes_pntlla import sedes_pantalla
-from .logica_sedes_pntlla import crear_sede
+from .logica_sedes_pntlla import crear_sede,limpiar_campos
 
 from .centrosacopio_pntlla import centrosacopio_panatlla
 from .logica_centrosacopio_pntlla import crear_centro_acopio
