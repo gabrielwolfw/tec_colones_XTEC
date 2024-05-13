@@ -1,0 +1,5 @@
+
+M-814747b4f27c|Metalica|kilogramo|90|Activo|2024-05-12 23:35:23|De lujo
+
+M-b27dadb24783|Pastico|kilogramo|90|Activo|2024-05-12 23:35:39|Limpio
+
