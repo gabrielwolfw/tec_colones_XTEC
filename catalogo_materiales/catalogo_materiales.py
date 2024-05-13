@@ -22,38 +22,47 @@ class CatalogoMaterialesReciclaje:
                 descripcion (str): Descripción del material
     '''
     def validacion_input_material(self, nombreMaterial, unidad, valorUnitario, descripcion):
-        if not 5 <= len(nombreMaterial) <= 50:
-            messagebox.showerror("Error", "El nombre del material debe tener entre 5 y 50 caracteres")
+        try:
+            if not 5 <= len(nombreMaterial) <= 50:
+                messagebox.showerror("Error", "El nombre del material debe tener entre 5 y 50 caracteres")
+                return False
+
+            if unidad not in ["kilogramo","litro","unidad"]:
+                messagebox.showerror("Error", "La unidad del material no es válida")
+                return False
+
+            valorUnitario = int(valorUnitario)
+            if not 0 < valorUnitario < 100000:
+                messagebox.showerror("Error", "El valor unitario debe ser mayor a 0 y menor a 100000")
+                return False
+
+            if len(descripcion) > 1000:
+                messagebox.showerror("Error", "La descripción del material no puede tener más de 1000 caracteres")
+                return False
+            return True
+        except ValueError:
+            messagebox.showerror("Error", "El valor unitario debe ser un valor numérico válido.")
             return False
-        
-        if unidad not in ["kilogramo","litro","unidad"]:
-            messagebox.showerror("Error", "La unidad del material no es válida")
+        except Exception as e:
+            messagebox.showerror("Error", f"Ha ocurrido un error inesperado: {str(e)}")
             return False
-        
-        valorUnitario = int(valorUnitario)
-        if not 0 < valorUnitario < 100000:
-            messagebox.showerror("Error", "El valor unitario debe ser mayor a 0 y menor a 100000")
-            return False
-        
-        if len(descripcion) > 1000:
-            messagebox.showerror("Error", "La descripción del material no puede tener más de 1000 caracteres")
-            return False
-        return True
     
     def crear_material_reciclaje(self, nombreMaterial, unidad, valorUnitario, descripcion):
-        estado = "Activo" 
-        fechaCreacion = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        material = {
-            "Material": nombreMaterial,
-            "Unidad": unidad,
-            "Valor unitario": valorUnitario,
-            "Estado": estado,
-            "Fecha de creacion": fechaCreacion,
-            "Descripcion": descripcion
-        }
-        self.agregar_material(material)
-        self.guardar_material_base_datos()
-        return True
+        if self.validacion_input_material(nombreMaterial, unidad, valorUnitario, descripcion):
+            estado = "Activo"
+            fechaCreacion = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            material = {
+                "Material": nombreMaterial,
+                "Unidad": unidad,
+                "Valor unitario": valorUnitario,
+                "Estado": estado,
+                "Fecha de creacion": fechaCreacion,
+                "Descripcion": descripcion
+            }
+            self.agregar_material(material)
+            self.guardar_material_base_datos()
+            return True
+        return False
     
     '''
     Método para agregar un material al catálogo
@@ -84,9 +93,12 @@ class CatalogoMaterialesReciclaje:
             key_id = f"M-{hash_token}"
             if key_id not in self.identificadores_existentes:
                 return key_id
-            
+
     def guardar_material_base_datos(self):
-        with open('./base_datos/materiales.txt','a') as file:
-            for material in self.materiales:
-                file.write(f"{material}\n")
+        try:
+            with open('./base_datos/materiales.txt', 'a') as file:
+                for material in self.materiales:
+                    file.write(f"{material}\n")
+        except Exception as e:
+            messagebox.showerror("Error", f"Ha ocurrido un error al guardar en la base de datos: {str(e)}")
         
