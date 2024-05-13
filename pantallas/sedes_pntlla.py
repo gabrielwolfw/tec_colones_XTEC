@@ -40,7 +40,8 @@ def sedes_pantalla(root):
     estado_option = tk.OptionMenu(sede_frame, estado_var, "activo", "inactivo")
     estado_option.place(x=200, y=170)
 
+    
     # Crear botón para crear sede
     create_button = tk.Button(sede_frame, text="Crear Sede", command=lambda: logica_sedes_pntlla.crear_sede(
-        nombre_entry.get(), ubicacion_entry.get(), numero_contacto_entry.get(), estado_var.get()), font=("Bahnschrift Condensed", 14))
+        nombre_entry, ubicacion_entry, numero_contacto_entry, estado_var), font=("Bahnschrift Condensed", 14))
     create_button.place(x=150, y=220)
