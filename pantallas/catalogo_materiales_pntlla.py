@@ -55,15 +55,11 @@ def catalogo_materiales_pantalla(root):
     lista_text.grid(row=6, column=0, columnspan=2, padx=5, pady=5)
 
 
-    crear_button = tk.Button(catalogo_frame, text="Crear", command=lambda: crear_material(nombre_entry.get(),
-                                                                                             nombre_entry,
-                                                                                             unidad_combobox.get(),
-                                                                                             unidad_combobox,
-                                                                                             valor_entry.get(),
-                                                                                             valor_entry,
-                                                                                             descripcion_text.get("1.0", tk.END),
-                                                                                             descripcion_text,
-                                                                                             lista_text), font=("Bahnschrift Condensed", 14))
+    crear_button = tk.Button(catalogo_frame, text="Crear", command=lambda: crear_material(nombre_entry,
+                                                                                          unidad_combobox,
+                                                                                          valor_entry,
+                                                                                          descripcion_text,
+                                                                                          lista_text), font=("Bahnschrift Condensed", 14))
     crear_button.grid(row=4, column=0, columnspan=2, padx=5, pady=5)
     actualizar_lista(lista_text)
 
