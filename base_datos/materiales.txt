@@ -1,0 +1,1 @@
+{'Material': 'metal2', 'Unidad': 'kilogramo', 'Valor unitario': '90', 'Estado': 'Activo', 'Fecha de creacion': '2024-05-12 11:31:08', 'Descripcion': 'Increible\n', 'Identificador': 'M-2a860e0ea558'}
