@@ -6,29 +6,30 @@ from pantallas.logica_catalogo_materiales_pntlla import crear_material,actualiza
 def catalogo_materiales_pantalla(root):
     catalogo_frame = tk.Toplevel(root)
     catalogo_frame.title("Crear material de reciclaje")
-    catalogo_frame.geometry("1000x500")
+    catalogo_frame.geometry("815x430")
     catalogo_frame.resizable(True, True)
+    catalogo_frame.configure(bg="#F1F6F9")
 
-    nombre_label = tk.Label(catalogo_frame, text="Nombre del material:")
+    nombre_label = tk.Label(catalogo_frame, text="Nombre del material:", font=("Bahnschrift Condensed", 14),bg="#A5C0DD")
     nombre_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
 
     nombre_entry = tk.Entry(catalogo_frame)
     nombre_entry.grid(row=0, column=1, padx=5, pady=5, sticky="w")
 
-    unidad_label = tk.Label(catalogo_frame, text="Unidad:")
+    unidad_label = tk.Label(catalogo_frame, text="Unidad:", font=("Bahnschrift Condensed", 14), bg="#A5C0DD")
     unidad_label.grid(row=1, column=0, padx=5, pady=5, sticky="w")
 
-    unidad_combobox = tk.ttk.Combobox(catalogo_frame, values=["kilogramo", "litro", "unidad"])
+    unidad_combobox = tk.ttk.Combobox(catalogo_frame, values=["kilogramo", "litro", "unidad"], font=("Bahnschrift Condensed", 14))
     unidad_combobox.grid(row=1, column=1, padx=5, pady=5, sticky="w")
     unidad_combobox.current(0)
 
-    valor_label = tk.Label(catalogo_frame, text="Valor Unitario:")
+    valor_label = tk.Label(catalogo_frame, text="Valor Unitario:", font=("Bahnschrift Condensed", 14),bg="#A5C0DD")
     valor_label.grid(row=2, column=0, padx=5, pady=5, sticky="w")
 
     valor_entry = tk.Entry(catalogo_frame)
     valor_entry.grid(row=2, column=1, padx=5, pady=5, sticky="w")
 
-    descripcion_label = tk.Label(catalogo_frame, text="Descripción:")
+    descripcion_label = tk.Label(catalogo_frame, text="Descripción:", font=("Bahnschrift Condensed", 14), bg="#A5C0DD")
     descripcion_label.grid(row=3, column=0, padx=5, pady=5, sticky="w")
 
     descripcion_text = tk.Text(catalogo_frame, height=4, width=30)
@@ -37,7 +38,7 @@ def catalogo_materiales_pantalla(root):
 
     
 
-    lista_label = tk.Label(catalogo_frame, text="Lista de materiales:")
+    lista_label = tk.Label(catalogo_frame, text="Lista de materiales:", font=("Bahnschrift Condensed", 14), bg="#A5C0DD")
     lista_label.grid(row=5, column=0, padx=5, pady=5, sticky="w")
 
     lista_text = tk.Text(catalogo_frame, height=10, width=100)
@@ -52,7 +53,7 @@ def catalogo_materiales_pantalla(root):
                                                                                              valor_entry,
                                                                                              descripcion_text.get("1.0", tk.END),
                                                                                              descripcion_text,
-                                                                                             lista_text))
+                                                                                             lista_text), font=("Bahnschrift Condensed", 14))
     crear_button.grid(row=4, column=0, columnspan=2, padx=5, pady=5)
     actualizar_lista(lista_text)
 
