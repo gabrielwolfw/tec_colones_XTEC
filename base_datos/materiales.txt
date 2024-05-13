@@ -1,1 +1,5 @@
-{'Material': 'metal2', 'Unidad': 'kilogramo', 'Valor unitario': '90', 'Estado': 'Activo', 'Fecha de creacion': '2024-05-12 11:31:08', 'Descripcion': 'Increible\n', 'Identificador': 'M-2a860e0ea558'}
+
+M-814747b4f27c|Metalica|kilogramo|90|Activo|2024-05-12 23:35:23|De lujo
+
+M-b27dadb24783|Pastico|kilogramo|90|Activo|2024-05-12 23:35:39|Limpio
+

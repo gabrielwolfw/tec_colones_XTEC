@@ -1,0 +1,2 @@
+TECSANJOSE|Alajuela|89898989|activo
+TECCARTAGO|Cartago|78787878|activo

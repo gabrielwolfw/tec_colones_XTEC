@@ -5,6 +5,7 @@ class CentrosAcopio:
         self.centros_acopio = []
         self.sedes_existentes = set()
         self.identificadores_existentes = set()
+        self.cargar_sedes_desde_archivo()
     
     def validar_input_centro_acopio(self, sede, numero_contacto, identificador):
         try:
@@ -26,7 +27,6 @@ class CentrosAcopio:
             return False
     
     def crear_centro_acopio(self, sede, numero_contacto, identificador):
-        self.validar_input_centro_acopio(sede, numero_contacto, identificador)
         centro_acopio = {
             "Sede": sede,
             "Número de contacto": numero_contacto,
@@ -44,6 +44,17 @@ class CentrosAcopio:
         try:
             with open('./base_datos/centrosacopio.txt', 'a') as file:
                 for centro_acopio in self.centros_acopio:
-                    file.write(f"{centro_acopio}\n")
+                    centro_acopio_str = f"{centro_acopio['Sede']}|{centro_acopio['Número de contacto']}|{centro_acopio['Identificador']}\n"
+                    file.write(centro_acopio_str)
         except Exception as e:
             messagebox.showerror("Error", f"Ha ocurrido un error al guardar en la base de datos: {str(e)}")
+    
+    def cargar_sedes_desde_archivo(self):
+        try:
+            with open('./base_datos/sedes.txt', 'r') as file:
+                for line in file:
+                    partes = line.strip().split('|')
+                    nombre = partes[0]
+                    self.sedes_existentes.add(nombre)
+        except Exception as e:
+            messagebox.showerror("Error", f"Ha ocurrido un error al cargar las sedes desde el archivo: {str(e)}")

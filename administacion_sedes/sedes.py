@@ -29,7 +29,6 @@ class Sedes:
 
 
     def crear_sede(self, nombre, ubicacion, numero_contacto, estado):
-        self.validar_input_sede(nombre, ubicacion, numero_contacto)
         sede = {
             "Nombre": nombre,
             "Ubicación": ubicacion,
@@ -48,6 +47,7 @@ class Sedes:
         try:
             with open('./base_datos/sedes.txt', 'a') as file:
                 for sede in self.sedes:
-                    file.write(f"{sede}\n")
+                    sede_str = f"{sede['Nombre']}|{sede['Ubicación']}|{sede['Número de contacto']}|{sede['Estado']}\n"
+                    file.write(sede_str)
         except Exception as e:
             messagebox.showerror("Error", f"Ha ocurrido un error al guardar en la base de datos: {str(e)}")

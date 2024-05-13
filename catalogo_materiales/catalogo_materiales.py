@@ -97,8 +97,9 @@ class CatalogoMaterialesReciclaje:
     def guardar_material_base_datos(self):
         try:
             with open('./base_datos/materiales.txt', 'a') as file:
-                for material in self.materiales:
-                    file.write(f"{material}\n")
+                material = self.materiales[-1]  # Get the last material added
+                material_str = f"{material['Identificador']}|{material['Material']}|{material['Unidad']}|{material['Valor unitario']}|{material['Estado']}|{material['Fecha de creacion']}|{material['Descripcion']}\n"
+                file.write(material_str)
         except Exception as e:
             messagebox.showerror("Error", f"Ha ocurrido un error al guardar en la base de datos: {str(e)}")
         
