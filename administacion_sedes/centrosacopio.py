@@ -7,6 +7,7 @@ class CentrosAcopio:
         self.identificadores_existentes = set()
         self.cargar_sedes_desde_archivo()
     
+    #
     def validar_input_centro_acopio(self, sede, numero_contacto, identificador):
         try:
             if not sede in self.sedes_existentes:
@@ -40,6 +41,7 @@ class CentrosAcopio:
         self.centros_acopio.append(centro_acopio)
         return True
     
+    # separara la parte de almacenamiento de la parte de logica
     def guardar_centro_acopio_base_datos(self):
         try:
             with open('./base_datos/centrosacopio.txt', 'a') as file:
