@@ -9,34 +9,7 @@ class CentrosAcopio:
         self.cargar_sedes_desde_archivo()
         self.cargar_centros_acopio_desde_archivo()
 
-    def validar_input_centro_acopio(self, sede, numero_contacto, identificador):
-        try:
-            if sede not in self.sedes_existentes:
-                messagebox.showerror("Error", "La sede no existe")
-                return False
-            if not numero_contacto.isdigit() or not 10000000 <= int(numero_contacto) <= 99999999:
-                messagebox.showerror("Error", "El número de contacto debe ser un número de 8 dígitos")
-                return False
-            if identificador in self.identificadores_existentes:
-                messagebox.showerror("Error", "El identificador ya existe")
-                return False
-            # Verificar si el identificador ya existe en la lista de centros de acopio
-            for centro_acopio in self.centros_acopio:
-                if centro_acopio["Identificador"] == identificador:
-                    messagebox.showerror("Error", "Ya existe un centro de acopio con ese identificador")
-                    return False
-            return True
-        except ValueError:
-            messagebox.showerror("Error", "El número de contacto debe ser un valor numérico válido.")
-            return False
-        except Exception as e:
-            messagebox.showerror("Error", f"Ha ocurrido un error inesperado: {str(e)}")
-            return False
-
     def crear_centro_acopio(self, sede, numero_contacto, identificador):
-        if not self.validar_input_centro_acopio(sede, numero_contacto, identificador):
-            return False
-        
         centro_acopio = {
             "Sede": sede,
             "Número de contacto": numero_contacto,

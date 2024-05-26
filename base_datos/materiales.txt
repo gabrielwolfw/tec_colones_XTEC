@@ -10,3 +10,5 @@ M-6ee489f97456|Plasticooo|kilogramo|10|Activo|2024-05-15 17:26:41|Botella
 
 M-305a03479ad1|Sprint 2|kilogramo|100|Activo|2024-05-15 18:27:54|
 
+M-82599848be68|PlasticoBrazileño|kilogramo|100|Activo|2024-05-26 12:06:26|De brazil
+

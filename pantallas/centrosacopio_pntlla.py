@@ -1,6 +1,6 @@
 import tkinter as tk
 
-import pantallas.logica_centrosacopio_pntlla as logica_centrosacopio_pntlla
+import pantallas_logica.centrosacopio_logica_pntlla as centrosacopio_logica_pntlla
 
 def centrosacopio_panatlla(root):
     # Ocultar la ventana principal
@@ -27,7 +27,7 @@ def centrosacopio_panatlla(root):
     identificador_Entry = tk.Entry(centrosacopio_frame, width=30)
     identificador_Entry.place(x=200, y=120)
 
-    crear_centro_acopio_button = tk.Button(centrosacopio_frame, text="Crear Centro de Acopio", command=lambda: logica_centrosacopio_pntlla.crear_centro_acopio(nombresede_Entry,
+    crear_centro_acopio_button = tk.Button(centrosacopio_frame, text="Crear Centro de Acopio", command=lambda: centrosacopio_logica_pntlla.crear_centro_acopio(nombresede_Entry,
                                                                                                                                                                    numerocontacto_Entry,
                                                                                                                                                                    identificador_Entry), font=("Bahnschrift Condensed", 14))
     crear_centro_acopio_button.place(x=100, y=170)
