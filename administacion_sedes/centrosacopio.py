@@ -5,7 +5,9 @@ class CentrosAcopio:
         self.centros_acopio = []
         self.sedes_existentes = set()
         self.identificadores_existentes = set()
+        self.centros_acopio_existentes = set()
         self.cargar_sedes_desde_archivo()
+        self.cargar_centros_acopio_desde_archivo()
 
     def validar_input_centro_acopio(self, sede, numero_contacto, identificador):
         try:
@@ -18,6 +20,11 @@ class CentrosAcopio:
             if identificador in self.identificadores_existentes:
                 messagebox.showerror("Error", "El identificador ya existe")
                 return False
+            # Verificar si el identificador ya existe en la lista de centros de acopio
+            for centro_acopio in self.centros_acopio:
+                if centro_acopio["Identificador"] == identificador:
+                    messagebox.showerror("Error", "Ya existe un centro de acopio con ese identificador")
+                    return False
             return True
         except ValueError:
             messagebox.showerror("Error", "El número de contacto debe ser un valor numérico válido.")
@@ -49,8 +56,11 @@ class CentrosAcopio:
         try:
             with open('./base_datos/centrosacopio.txt', 'a') as file:
                 for centro_acopio in self.centros_acopio:
-                    centro_acopio_str = f"{centro_acopio['Sede']}|{centro_acopio['Número de contacto']}|{centro_acopio['Identificador']}\n"
-                    file.write(centro_acopio_str)
+                    centro_acopio_tupla = tuple(centro_acopio.items())
+                    if centro_acopio_tupla not in self.centros_acopio_existentes:
+                        centro_acopio_str = f"{centro_acopio['Sede']}|{centro_acopio['Número de contacto']}|{centro_acopio['Identificador']}\n"
+                        file.write(centro_acopio_str)
+                        self.centros_acopio_existentes.add(centro_acopio_tupla)
         except Exception as e:
             messagebox.showerror("Error", f"Ha ocurrido un error al guardar en la base de datos: {str(e)}")
 
@@ -64,6 +74,21 @@ class CentrosAcopio:
         except Exception as e:
             messagebox.showerror("Error", f"Ha ocurrido un error al cargar las sedes desde el archivo: {str(e)}")
 
-
-
-
+    def cargar_centros_acopio_desde_archivo(self):
+        try:
+            with open('./base_datos/centrosacopio.txt', 'r') as file:
+                for line in file:
+                    partes = line.strip().split('|')
+                    if len(partes) == 3:
+                        sede, numero_contacto, identificador = partes
+                        centro_acopio = {
+                            "Sede": sede,
+                            "Número de contacto": numero_contacto,
+                            "Identificador": identificador
+                        }
+                        self.centros_acopio.append(centro_acopio)
+                        self.sedes_existentes.add(sede)
+                        self.identificadores_existentes.add(identificador)
+                        self.centros_acopio_existentes.add(tuple(centro_acopio.items()))
+        except Exception as e:
+            messagebox.showerror("Error", f"Ha ocurrido un error al cargar los centros de acopio desde el archivo: {str(e)}")

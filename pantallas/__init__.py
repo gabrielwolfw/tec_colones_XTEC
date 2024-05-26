@@ -6,3 +6,5 @@ from .logica_centrosacopio_pntlla import crear_centro_acopio
 
 from .logica_catalogo_materiales_pntlla import crear_material,actualizar_lista
 from .catalogo_materiales_pntlla import catalogo_materiales_pantalla
+
+from .crear_transaccion_pntlla import crear_transaccion_pntlla
