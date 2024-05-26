@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 
-from pantallas import sedes_pantalla, centrosacopio_panatlla, catalogo_materiales_pantalla, crear_transaccion_pntlla
+from pantallas import sedes_pantalla, centrosacopio_panatlla, catalogo_materiales_pantalla, crear_transaccion_pntlla , historial_transacciones
 
 if __name__ == "__main__":
     # Crear la ventana principal
@@ -21,6 +21,9 @@ if __name__ == "__main__":
     
     crear_button_transaccion = tk.Button(root, text="Crear transacción", font=("Bahnschrift Condensed", 14), fg="black", bg="#A5C0DD", borderwidth=4, command=lambda: crear_transaccion_pntlla(root))
     crear_button_transaccion.place(x=250,y=200)
+    
+    crear_button_historial_ca = tk.Button(root, text="Historial de transacciones", font=("Bahnschrift Condensed", 14), fg="black", bg="#A5C0DD", borderwidth=4, command=lambda: historial_transacciones(root))
+    crear_button_historial_ca.place(x=250,y=250)
     
     
 
