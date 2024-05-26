@@ -26,7 +26,7 @@ def historial_transacciones(root):
 
     centro_acopio_label = tk.Label(transaccion_frame, text="Centro de acopio", font=("Bahnschrift Condensed", 12))
     centro_acopio_label.place(x=470, y=20)
-    centro_acopio_combobox = ttk.Combobox(transaccion_frame, values=["CMF1", "CMFP", "Otro"], font=("Bahnschrift Condensed", 12))
+    centro_acopio_combobox = ttk.Combobox(transaccion_frame, values=["CMF1", "CMFP"], font=("Bahnschrift Condensed", 12))
     centro_acopio_combobox.place(x=570, y=20)
     centro_acopio_combobox.current(0)
 
@@ -45,6 +45,12 @@ def historial_transacciones(root):
     # Datos de ejemplo
     datos = [
         ("12/10/2024", "102030330", "12", "CMF1", "-500", "Anulada"),
+        ("12/03/2024", "102030330", "34", "CMF1", "-500", "Anulada"),
+        ("12/23/2024", "102030330", "12", "CMF1", "457", "Anulada"),
+        ("05/09/2024", "155050350", "1", "CMFP", "10", "Aprobada"),
+        ("12/10/2024", "102030330", "12", "CMFP", "-500", "Anulada"),
+        ("12/03/2024", "102030330", "34", "CMFP", "-500", "Anulada"),
+        ("12/23/2024", "102030330", "12", "CMFP", "457", "Anulada"),
         ("05/09/2024", "155050350", "1", "CMFP", "10", "Aprobada"),
         ("09/02/2024", "199931200", "22", "CMF1", "1000", "Aprobada")
     ]
@@ -95,15 +101,17 @@ def historial_transacciones(root):
     def buscar_transacciones():
         fecha_inicio = fecha_inicio_entry.get_date()
         fecha_final = fecha_final_entry.get_date()
+        centro_acopio_seleccionado = centro_acopio_combobox.get()
 
         # Limpiar tabla de transacciones
         for item in transacciones_tree.get_children():
             transacciones_tree.delete(item)
 
-        # Filtrar transacciones por fecha
+        # Filtrar transacciones por fecha y centro de acopio
         for transaccion in datos:
             trans_fecha = datetime.datetime.strptime(transaccion[0], "%m/%d/%Y").date()
-            if fecha_inicio <= trans_fecha <= fecha_final:
+            trans_centro_acopio = transaccion[3]
+            if fecha_inicio <= trans_fecha <= fecha_final and trans_centro_acopio == centro_acopio_seleccionado:
                 transacciones_tree.insert("", tk.END, values=transaccion)
             
             
