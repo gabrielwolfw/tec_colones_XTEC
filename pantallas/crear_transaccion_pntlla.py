@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-import pantallas_logica.transacciones_logica_pntlla as transaccion_logica
+import pantallas_logica.crear_transacciones_logica_pntlla as transaccion_logica
 
 def crear_transaccion_pntlla(root):
     # Ocultar la ventana principal
@@ -47,16 +47,7 @@ def crear_transaccion_pntlla(root):
     materiales_ag.column("Material", width=70)
     materiales_ag.column("Valor", width=70)
     
-    datos = [
-        ("Material 1", "valor 1"),
-        ("Material 2", "valor 2"),
-        ("Material 3", "valor 3"),
-        ("Material 4", "valor 4"),
-        ("Material 5", "valor 5"),
-        ("Material 6", "valor 6"),
-        ("Material 7", "valor 7")
-    ]
-    
+    datos = []
     for item in datos:
         materiales_ag.insert("", tk.END, values=item)
     

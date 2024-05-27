@@ -3,7 +3,7 @@ from tkinter import ttk
 import datetime
 from tkcalendar import DateEntry
 from manejador_archivos.transacciones_manejador_archivos import leer_datos_de_transacciones
-import pantallas_logica.transacciones_logica_pntlla as transaccion_logica
+import pantallas_logica.crear_transacciones_logica_pntlla as transaccion_logica
 
 transacción_seleccionada= None
 

@@ -53,6 +53,8 @@ def agregar_material_transaccion(material_combobox, cantidad_Entry, materiales_a
     total_tec_colones_Entry.insert(0, f"{total_actual:.2f}")
     total_tec_colones_Entry.config(state=tk.DISABLED)
 
+    limpiar_campos_agregar_material(material_combobox, cantidad_Entry)
+
 
 def obtener_materiales_combobox():
     # Obtener la lista de materiales y sus valores del catálogo
@@ -117,3 +119,8 @@ def limpiar_campos_transaccion(carnet_Entry, centro_combobox, cantidad_Entry, ma
     total_tec_colones_Entry.delete(0, tk.END)
     total_tec_colones_Entry.insert(0, "0.00")
     total_tec_colones_Entry.config(state=tk.DISABLED)
+
+
+def limpiar_campos_agregar_material(material_combobox, cantidad_Entry):
+    material_combobox.set("")
+    cantidad_Entry.delete(0, tk.END)
