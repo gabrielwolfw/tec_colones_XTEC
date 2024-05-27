@@ -1,31 +1,26 @@
 from tkinter import messagebox
+from manejador_archivos import cargar_centros_acopio_desde_archivo,cargar_sedes_desde_archivo,guardar_centro_acopio_base_datos
 
 class CentrosAcopio:
     def __init__(self):
         self.centros_acopio = []
         self.sedes_existentes = set()
         self.identificadores_existentes = set()
-        self.cargar_sedes_desde_archivo()
-    
-    def validar_input_centro_acopio(self, sede, numero_contacto, identificador):
-        try:
-            if not sede in self.sedes_existentes:
-                messagebox.showerror("Error", "La sede no existe")
-                return False
-            if not numero_contacto.isdigit() or not 1000000 < int(numero_contacto) < 100000000:
-                messagebox.showerror("Error", "El número de contacto debe ser un número debe tener 8 dígitos")
-                return False
-            if identificador in self.identificadores_existentes:
-                messagebox.showerror("Error", "El identificador ya existe")
-                return False
-            return True
-        except ValueError:
-            messagebox.showerror("Error", "El número de contacto debe ser un valor numérico válido.")
-            return False
-        except Exception as e:
-            messagebox.showerror("Error", f"Ha ocurrido un error inesperado: {str(e)}")
-            return False
-    
+        self.centros_acopio_existentes = set()
+        self.cargar_datos_iniciales()
+
+    def cargar_datos_iniciales(self):
+        # Cargar sedes desde archivo
+        sedes = cargar_sedes_desde_archivo()
+        self.sedes_existentes.update(sedes)
+        
+        # Cargar centros de acopio desde archivo
+        centros_acopio = cargar_centros_acopio_desde_archivo()
+        self.centros_acopio.extend(centros_acopio)
+        for centro in centros_acopio:
+            self.sedes_existentes.add(centro["Sede"])
+            self.identificadores_existentes.add(centro["Identificador"])
+
     def crear_centro_acopio(self, sede, numero_contacto, identificador):
         centro_acopio = {
             "Sede": sede,
@@ -33,28 +28,22 @@ class CentrosAcopio:
             "Identificador": identificador
         }
         self.agregar_centro_acopio(centro_acopio)
-        self.guardar_centro_acopio_base_datos()
+        guardar_centro_acopio_base_datos(centro_acopio)
         return True
-    
+
     def agregar_centro_acopio(self, centro_acopio):
         self.centros_acopio.append(centro_acopio)
+        self.sedes_existentes.add(centro_acopio["Sede"])
+        self.identificadores_existentes.add(centro_acopio["Identificador"])
         return True
     
-    def guardar_centro_acopio_base_datos(self):
-        try:
-            with open('./base_datos/centrosacopio.txt', 'a') as file:
-                for centro_acopio in self.centros_acopio:
-                    centro_acopio_str = f"{centro_acopio['Sede']}|{centro_acopio['Número de contacto']}|{centro_acopio['Identificador']}\n"
-                    file.write(centro_acopio_str)
-        except Exception as e:
-            messagebox.showerror("Error", f"Ha ocurrido un error al guardar en la base de datos: {str(e)}")
+    def obtener_sedes(self):
+        return list(self.sedes_existentes)
+
     
-    def cargar_sedes_desde_archivo(self):
-        try:
-            with open('./base_datos/sedes.txt', 'r') as file:
-                for line in file:
-                    partes = line.strip().split('|')
-                    nombre = partes[0]
-                    self.sedes_existentes.add(nombre)
-        except Exception as e:
-            messagebox.showerror("Error", f"Ha ocurrido un error al cargar las sedes desde el archivo: {str(e)}")
+    def obtener_identificadores(self):
+        return [centro["Identificador"] for centro in self.centros_acopio]
+
+
+
+

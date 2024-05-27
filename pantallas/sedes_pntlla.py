@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-import pantallas.logica_sedes_pntlla as logica_sedes_pntlla
+import pantallas_logica.sedes_logica_pntlla as sedes_logica_pntlla
 
 def sedes_pantalla(root):
     # Ocultar la ventana principal
@@ -42,6 +42,6 @@ def sedes_pantalla(root):
 
     
     # Crear botón para crear sede
-    create_button = tk.Button(sede_frame, text="Crear Sede", command=lambda: logica_sedes_pntlla.crear_sede(
+    create_button = tk.Button(sede_frame, text="Crear Sede", command=lambda: sedes_logica_pntlla.crear_sede(
         nombre_entry, ubicacion_entry, numero_contacto_entry, estado_var), font=("Bahnschrift Condensed", 14))
     create_button.place(x=150, y=220)

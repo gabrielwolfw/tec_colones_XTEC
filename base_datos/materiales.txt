@@ -1,8 +1,8 @@
-M-814747b4f27c|Metalica|kilogramo|90|Activo|2024-05-12 23:35:23|De lujo
-M-b27dadb24783|Pastico|kilogramo|90|Activo|2024-05-12 23:35:39|Limpio
-M-f2f4c891565d|metalicaaa|kilogramo|10|Activo|2024-05-13 01:25:03|sefe
+M-320a6ff02c2d|Carton|kilogramo|10|Activo|2024-05-26 23:22:53|SF
 
-M-6330aa56103d|pastico|kilogramo|103|Activo|2024-05-13 01:25:36|sdf
+M-557171281c2e|Metal|kilogramo|25|Activo|2024-05-27 02:23:41|
 
-M-6a127063fc25|OPSDF|kilogramo|10|Activo|2024-05-13 01:25:57|sdf
+M-9cf65c5967ef|Papel|kilogramo|1|Activo|2024-05-27 02:23:48|
+
+M-afcc4e748a34|Plastico|kilogramo|5|Activo|2024-05-27 02:24:04|
 
