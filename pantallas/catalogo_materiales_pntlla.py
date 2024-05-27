@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from pantallas.logica_catalogo_materiales_pntlla import crear_material,actualizar_lista
+from pantallas_logica.catalogo_materiales_logica_pntlla import crear_material,actualizar_lista
 
 
 def catalogo_materiales_pantalla(root):

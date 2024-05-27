@@ -3,6 +3,7 @@ import secrets
 import hashlib
 from tkinter import messagebox
 
+from manejador_archivos import guardar_material_base_datos, cargar_materiales_desde_base_datos
 
 '''
 Clase para manejar el catálogo de materiales de reciclaje
@@ -11,8 +12,12 @@ class CatalogoMaterialesReciclaje:
     def __init__(self):
         self.materiales = []
         self.identificadores_existentes = set()
-
-
+        self.cargar_datos_iniciales_materiales()
+    
+    def cargar_datos_iniciales_materiales(self):
+        # Cargar materiales desde archivo
+        materiales_lista = cargar_materiales_desde_base_datos()
+        self.materiales.extend(materiales_lista)
     '''
     Método para crear un material de reciclaje
 
@@ -21,49 +26,20 @@ class CatalogoMaterialesReciclaje:
                 valorUnitario (int): Valor unitario del material en Tec_Colones
                 descripcion (str): Descripción del material
     '''
-    def validacion_input_material(self, nombreMaterial, unidad, valorUnitario, descripcion):
-        try:
-            if not 5 <= len(nombreMaterial) <= 50:
-                messagebox.showerror("Error", "El nombre del material debe tener entre 5 y 50 caracteres")
-                return False
-
-            if unidad not in ["kilogramo","litro","unidad"]:
-                messagebox.showerror("Error", "La unidad del material no es válida")
-                return False
-
-            valorUnitario = int(valorUnitario)
-            if not 0 < valorUnitario < 100000:
-                messagebox.showerror("Error", "El valor unitario debe ser mayor a 0 y menor a 100000")
-                return False
-
-            if len(descripcion) > 1000:
-                messagebox.showerror("Error", "La descripción del material no puede tener más de 1000 caracteres")
-                return False
-            return True
-        except ValueError:
-            messagebox.showerror("Error", "El valor unitario debe ser un valor numérico válido.")
-            return False
-        except Exception as e:
-            messagebox.showerror("Error", f"Ha ocurrido un error inesperado: {str(e)}")
-            return False
-    
     def crear_material_reciclaje(self, nombreMaterial, unidad, valorUnitario, descripcion):
-        if self.validacion_input_material(nombreMaterial, unidad, valorUnitario, descripcion):
-            estado = "Activo"
-            fechaCreacion = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            material = {
-                "Material": nombreMaterial,
-                "Unidad": unidad,
-                "Valor unitario": valorUnitario,
-                "Estado": estado,
-                "Fecha de creacion": fechaCreacion,
-                "Descripcion": descripcion
-            }
-            self.agregar_material(material)
-            self.guardar_material_base_datos()
-            return True
-        return False
-    
+        estado = "Activo"
+        fechaCreacion = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        material = {
+            "Material": nombreMaterial,
+            "Unidad": unidad,
+            "Valor unitario": valorUnitario,
+            "Estado": estado,
+            "Fecha de creacion": fechaCreacion,
+            "Descripcion": descripcion
+        }
+        self.agregar_material(material)
+        guardar_material_base_datos(material)
+        
     '''
     Método para agregar un material al catálogo
 
@@ -94,12 +70,27 @@ class CatalogoMaterialesReciclaje:
             if key_id not in self.identificadores_existentes:
                 return key_id
 
-    def guardar_material_base_datos(self):
-        try:
-            with open('./base_datos/materiales.txt', 'a') as file:
-                material = self.materiales[-1]  # Get the last material added
-                material_str = f"{material['Identificador']}|{material['Material']}|{material['Unidad']}|{material['Valor unitario']}|{material['Estado']}|{material['Fecha de creacion']}|{material['Descripcion']}\n"
-                file.write(material_str)
-        except Exception as e:
-            messagebox.showerror("Error", f"Ha ocurrido un error al guardar en la base de datos: {str(e)}")
-        
+    def obtener_precio_unitario(self,nombre_material):
+        for material in self.materiales:
+            if material['Material'] == nombre_material:
+                return material['Valor unitario']
+        return None  # Si no se encuentra el material
+    
+    '''
+    Obtiene una lista de materiales unicamente con el nombre y valor unitario
+    '''
+    def obtener_lista_materiales(self):
+        lista_materiales = []
+        for material in self.materiales:
+            lista_materiales.append({
+                "nombre": material["Material"],
+                "valor_unitario": material["Valor unitario"]
+            })
+        return lista_materiales
+
+# Crear una instancia de CatalogoMaterialesReciclaje
+catalogo = CatalogoMaterialesReciclaje()
+
+# Obtener la lista de materiales con sus valores unitarios
+lista_materiales = catalogo.obtener_lista_materiales()
+print(lista_materiales)
