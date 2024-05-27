@@ -1,2 +1,8 @@
 M-320a6ff02c2d|Carton|kilogramo|10|Activo|2024-05-26 23:22:53|SF
 
+M-557171281c2e|Metal|kilogramo|25|Activo|2024-05-27 02:23:41|
+
+M-9cf65c5967ef|Papel|kilogramo|1|Activo|2024-05-27 02:23:48|
+
+M-afcc4e748a34|Plastico|kilogramo|5|Activo|2024-05-27 02:24:04|
+
