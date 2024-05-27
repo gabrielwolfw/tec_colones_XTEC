@@ -1,1 +1,2 @@
-27/05/2024|290|CCA15|Carton:2|140.00|Aprobada
+05/27/2024|1233|MEOW|Carton:23|230.00|Aprobada
+05/27/2024|123|CCA15|Carton:2|20.00|Aprobada

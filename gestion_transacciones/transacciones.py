@@ -17,7 +17,7 @@ class Transacciones:
     
     def crear_transaccion(self,numero_carnet,centro_acopio,total_tec_colones_Entry):
         tipo = "Aprobada"
-        fecha = datetime.datetime.now().strftime("%d/%m/%Y")
+        fecha = datetime.datetime.now().strftime("%m/%d/%Y")
         transaccion = {
             "Fecha": fecha,
             "numero_carnet": numero_carnet,
