@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from catalogo_materiales import CatalogoMaterialesReciclaje
+from pantallas_logica.Verifica_Carnet import verifica_usuario_exise
 from gestion_transacciones import Transacciones
 
 transaccion = Transacciones()
@@ -13,8 +14,11 @@ def crear_transaccion(carnet_Entry,centro_combobox,total_tec_colones_Entry):
     total_tec_colones = total_tec_colones_Entry.get()
 
     # Crear una instancia de la clase Transaccion
-    transaccion.crear_transaccion(numero_carnet,centro_acopio,total_tec_colones)
-    
+    if verifica_usuario_exise(numero_carnet):
+        transaccion.crear_transaccion(numero_carnet,centro_acopio,total_tec_colones)
+    else:
+        messagebox.showerror("Error","El usuario no se encuentra en Cuenta Tec")
+
 def obtener_valores_combobox():
     # Obtener la lista de materiales y sus valores del catálogo
     lista_materiales = catalogo_materiales.obtener_lista_materiales()
