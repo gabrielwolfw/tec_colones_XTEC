@@ -71,7 +71,7 @@ def obtener_centros_acopio_combobox():
 
 
 
-def continuar_click(carnet_Entry, centro_combobox, total_tec_colones_Entry):
+def continuar_click(carnet_Entry, centro_combobox, total_tec_colones_Entry, cantidad_Entry, materiales_ag):
     # Verificar la validez de los datos de ingreso antes de proceder
     if not validar_ingreso_datos_crear_transaccion(carnet_Entry, centro_combobox):
         return
@@ -82,6 +82,7 @@ def continuar_click(carnet_Entry, centro_combobox, total_tec_colones_Entry):
         # Si el usuario hizo clic en "Sí", crear la transacción
         crear_transaccion(carnet_Entry, centro_combobox, total_tec_colones_Entry)
         messagebox.showinfo("Transacción realizada", "La transacción se ha realizado con éxito.")
+        limpiar_campos_transaccion(carnet_Entry, centro_combobox, cantidad_Entry, materiales_ag, total_tec_colones_Entry)
     else:
         # Si el usuario hizo clic en "No" o cerró el cuadro de diálogo, no hacer nada
         pass
@@ -106,3 +107,13 @@ def validar_ingreso_datos_agregar_material(material_combobox, cantidad_Entry):
         messagebox.showerror("Error", "La cantidad debe ser un número entero.")
         return False
     return True
+
+def limpiar_campos_transaccion(carnet_Entry, centro_combobox, cantidad_Entry, materiales_ag, total_tec_colones_Entry):
+    carnet_Entry.delete(0, tk.END)
+    centro_combobox.set("")
+    cantidad_Entry.delete(0, tk.END)
+    materiales_ag.delete(*materiales_ag.get_children())
+    total_tec_colones_Entry.config(state=tk.NORMAL)
+    total_tec_colones_Entry.delete(0, tk.END)
+    total_tec_colones_Entry.insert(0, "0.00")
+    total_tec_colones_Entry.config(state=tk.DISABLED)

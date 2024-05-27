@@ -77,7 +77,7 @@ def crear_transaccion_pntlla(root):
     salir_button = tk.Button(transaccion_frame, text="Salir", bg="#A5C0DD", font=("Bahnschrift Condensed", 12), command=lambda:close_window())
     salir_button.place(x=12, y=460)
     
-    continuar_button = tk.Button(transaccion_frame, text="Continuar", bg="#A5C0DD",font=("Bahnschrift Condensed", 12), command=lambda:transaccion_logica.continuar_click(carnet_Entry,centro_combobox,total_tec_colones_Entry))
+    continuar_button = tk.Button(transaccion_frame, text="Continuar", bg="#A5C0DD",font=("Bahnschrift Condensed", 12), command=lambda:transaccion_logica.continuar_click(carnet_Entry, centro_combobox, total_tec_colones_Entry, cantidad_Entry, materiales_ag))
     continuar_button.place(x=530, y=460)
 
     
