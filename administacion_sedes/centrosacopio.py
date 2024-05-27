@@ -36,7 +36,13 @@ class CentrosAcopio:
         self.sedes_existentes.add(centro_acopio["Sede"])
         self.identificadores_existentes.add(centro_acopio["Identificador"])
         return True
+    
+    def obtener_sedes(self):
+        return list(self.sedes_existentes)
 
+    
+    def obtener_identificadores(self):
+        return [centro["Identificador"] for centro in self.centros_acopio]
 
 
 

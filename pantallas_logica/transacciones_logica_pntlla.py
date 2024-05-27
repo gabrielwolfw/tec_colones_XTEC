@@ -1,11 +1,15 @@
 import tkinter as tk
 from tkinter import messagebox
+
+from administacion_sedes import CentrosAcopio
 from catalogo_materiales import CatalogoMaterialesReciclaje
 from pantallas_logica.Verifica_Carnet import verifica_usuario_exise
 from gestion_transacciones import Transacciones
 
+
 transaccion = Transacciones()
 catalogo_materiales = CatalogoMaterialesReciclaje()
+centro_acopio = CentrosAcopio()
 
 def crear_transaccion(carnet_Entry,centro_combobox,total_tec_colones_Entry):
     # Obtener los datos ingresados por el usuario
@@ -28,6 +32,11 @@ def obtener_valores_combobox():
 
     return valores_combobox
     
+def obtener_centros_acopio_combobox():
+    lista_centros_acopio = centro_acopio.obtener_identificadores()
+
+    valores_centros_acopio = [f"{centro}" for centro in lista_centros_acopio]
+    return valores_centros_acopio
 
 def agregar_material_transaccion(material_combobox, cantidad_Entry, materiales_ag,total_tec_colones_Entry):
     # Obtener el valor seleccionado en el Combobox y dividirlo para obtener el nombre del material y el valor unitario

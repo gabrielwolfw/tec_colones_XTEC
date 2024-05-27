@@ -1,6 +1,7 @@
 from tkinter import messagebox
 import tkinter as tk
 from administacion_sedes import CentrosAcopio
+from administacion_sedes import Sedes
 
 centro_acopio = CentrosAcopio()
 
@@ -22,6 +23,11 @@ def limpiar_campos(sede_entry, numero_contacto_entry, identificador_entry):
     sede_entry.delete(0, tk.END)
     numero_contacto_entry.delete(0, tk.END)
     identificador_entry.delete(0, tk.END)
+
+def obtener_sedes_combobox():
+    lista_sedes = centro_acopio.obtener_sedes()
+    valores_sedes = [f"{sede}" for sede in lista_sedes]
+    return valores_sedes
 
 
 def validar_input_centro_acopio(sede, numero_contacto, identificador):

@@ -14,7 +14,8 @@ def centrosacopio_panatlla(root):
 
     nombresede_Label = tk.Label(centrosacopio_frame, text="Nombre de la sede:", font=("Bahnschrift Condensed", 14), bg="#A5C0DD")
     nombresede_Label.place(x=20, y=20)
-    nombresede_Entry = tk.Entry(centrosacopio_frame, width=30)
+    valores_sedes = centrosacopio_logica_pntlla.obtener_sedes_combobox()
+    nombresede_Entry = tk.ttk.Combobox(centrosacopio_frame,values=valores_sedes,width=25)
     nombresede_Entry.place(x=200, y=20)
 
     numerocontacto_Label = tk.Label(centrosacopio_frame, text="Número de contacto:", font=("Bahnschrift Condensed", 14), bg="#A5C0DD")

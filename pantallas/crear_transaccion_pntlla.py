@@ -17,9 +17,10 @@ def crear_transaccion_pntlla(root):
     carnet_Entry = tk.Entry(transaccion_frame, width=30)
     carnet_Entry.place(x=220, y=25)
 
+    valores_centros_acopio = transaccion_logica.obtener_centros_acopio_combobox()
     centro_Label = tk.Label(transaccion_frame, text="Seleccione el centro de acopio:", font=("Bahnschrift Condensed", 14), bg="#A5C0DD")
     centro_Label.place(x=20, y=70)
-    centro_combobox = tk.ttk.Combobox(transaccion_frame, values=["", "", ""], font=("Bahnschrift Condensed", 14))
+    centro_combobox = tk.ttk.Combobox(transaccion_frame, values=valores_centros_acopio, font=("Bahnschrift Condensed", 14))
     centro_combobox.place(x=228, y=72)
     centro_combobox.current(0)
     
