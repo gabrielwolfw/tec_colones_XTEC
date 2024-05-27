@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 import datetime
-import tkcalendar
+from tkcalendar import DateEntry
+
 transacción_seleccionada= None
 
 def historial_transacciones(root):
