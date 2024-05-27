@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from pantallas_logica.Verifica_Carnet import verifica_usuario_exise
+import pantallas_logica.transacciones_logica_pntlla as transaccion_logica
 
 def crear_transaccion_pntlla(root):
     # Ocultar la ventana principal
@@ -25,7 +26,8 @@ def crear_transaccion_pntlla(root):
     
     material_Label = tk.Label(transaccion_frame, text="Seleccione el tipo de material:", font=("Bahnschrift Condensed", 14), bg="#A5C0DD")
     material_Label.place(x=20, y=117)
-    material_combobox = tk.ttk.Combobox(transaccion_frame, values=[",", ",", ","], font=("Bahnschrift Condensed", 14))
+    valores_combobox = transaccion_logica.obtener_valores_combobox()
+    material_combobox = tk.ttk.Combobox(transaccion_frame, values=valores_combobox, font=("Bahnschrift Condensed", 14))
     material_combobox.place(x=228, y=119)
     material_combobox.current(0)
     
@@ -35,8 +37,7 @@ def crear_transaccion_pntlla(root):
     cantidad_Entry.place(x=237, y=169)
     
     
-    agregar_button = tk.Button(transaccion_frame, text="Agregar", bg="#A5C0DD")
-    agregar_button.place(x=365, y=210)
+    
     
     columna = ("Material", "Valor")
     materiales_ag = ttk.Treeview(transaccion_frame, columns=columna, show="headings", height=5)
@@ -58,17 +59,31 @@ def crear_transaccion_pntlla(root):
     
     for item in datos:
         materiales_ag.insert("", tk.END, values=item)
-        
+    
+
+
+
     colones_Label = tk.Label(transaccion_frame, text="Cantidad de Tec-Colones para asignar:", font=("Bahnschrift Condensed", 14))
     colones_Label.place(x=20, y=400)
+    total_tec_colones_Entry = tk.Entry(transaccion_frame, width=30, state=tk.DISABLED)
+    total_tec_colones_Entry.place(x=280, y=410)
+    total_tec_colones_Entry.config(state=tk.NORMAL)
+    total_tec_colones_Entry.insert(0, "0.00")
+    total_tec_colones_Entry.config(state=tk.DISABLED)
+
+    agregar_button = tk.Button(transaccion_frame, text="Agregar", bg="#A5C0DD",command=lambda:transaccion_logica.agregar_material_transaccion(material_combobox,cantidad_Entry,materiales_ag,total_tec_colones_Entry))
+    agregar_button.place(x=365, y=210)
     
     salir_button = tk.Button(transaccion_frame, text="Salir", bg="#A5C0DD", font=("Bahnschrift Condensed", 12), command=lambda:close_window())
     salir_button.place(x=12, y=460)
     
-    continuar_button = tk.Button(transaccion_frame, text="Continuar", bg="#A5C0DD",font=("Bahnschrift Condensed", 12), command=lambda:verifica_usuario_exise(carnet_Entry))
+    continuar_button = tk.Button(transaccion_frame, text="Continuar", bg="#A5C0DD",font=("Bahnschrift Condensed", 12), command=lambda:transaccion_logica.crear_transaccion(carnet_Entry,centro_combobox,total_tec_colones_Entry))
     continuar_button.place(x=530, y=460)
+
+    
     
 
+    
 
     def close_window():
         # Mostrar nuevamente la ventana principal

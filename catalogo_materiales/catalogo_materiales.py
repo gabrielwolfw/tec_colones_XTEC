@@ -11,6 +11,7 @@ class CatalogoMaterialesReciclaje:
     def __init__(self):
         self.materiales = []
         self.identificadores_existentes = set()
+        self.cargar_materiales_desde_base_datos()
 
 
     '''
@@ -75,3 +76,47 @@ class CatalogoMaterialesReciclaje:
         except Exception as e:
             messagebox.showerror("Error", f"Ha ocurrido un error al guardar en la base de datos: {str(e)}")
         
+    def cargar_materiales_desde_base_datos(self):
+        try:
+            with open('./base_datos/materiales.txt', 'r') as file:
+                for line in file:
+                    datos = line.strip().split('|')
+                    if len(datos) >= 2:  # Asegurar que hay al menos dos elementos
+                        nombreMaterial = datos[1] # Corregir la codificación
+                        valorUnitario = datos[3]
+                        material = {
+                            "Material": nombreMaterial,
+                            "Valor unitario": valorUnitario
+                        }
+                        self.materiales.append(material)
+        except FileNotFoundError:
+            # Si el archivo no existe, no hacer nada
+            pass
+        except Exception as e:
+            messagebox.showerror("Error", f"Ha ocurrido un error al cargar la base de datos: {str(e)}")
+
+
+    def obtener_precio_unitario(self,nombre_material):
+        for material in self.materiales:
+            if material['Material'] == nombre_material:
+                return material['Valor unitario']
+        return None  # Si no se encuentra el material
+    
+    '''
+    Obtiene una lista de materiales unicamente con el nombre y valor unitario
+    '''
+    def obtener_lista_materiales(self):
+        lista_materiales = []
+        for material in self.materiales:
+            lista_materiales.append({
+                "nombre": material["Material"],
+                "valor_unitario": material["Valor unitario"]
+            })
+        return lista_materiales
+
+# Crear una instancia de CatalogoMaterialesReciclaje
+catalogo = CatalogoMaterialesReciclaje()
+
+# Obtener la lista de materiales con sus valores unitarios
+lista_materiales = catalogo.obtener_lista_materiales()
+print(lista_materiales)
