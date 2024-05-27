@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 import datetime
 from tkcalendar import DateEntry
+from manejador_archivos.transacciones_manejador_archivos import leer_datos_de_transacciones
+import pantallas_logica.transacciones_logica_pntlla as transaccion_logica
 
 transacción_seleccionada= None
 
@@ -25,9 +27,10 @@ def historial_transacciones(root):
     fecha_final_entry = DateEntry(transaccion_frame, width=12, background='darkblue', foreground='white', borderwidth=2)
     fecha_final_entry.place(x=340, y=20)
 
+    valores_centros_acopio = transaccion_logica.obtener_centros_acopio_combobox()
     centro_acopio_label = tk.Label(transaccion_frame, text="Centro de acopio", font=("Bahnschrift Condensed", 12))
     centro_acopio_label.place(x=470, y=20)
-    centro_acopio_combobox = ttk.Combobox(transaccion_frame, values=["CMF1", "CMFP"], font=("Bahnschrift Condensed", 12))
+    centro_acopio_combobox = ttk.Combobox(transaccion_frame,values=valores_centros_acopio, font=("Bahnschrift Condensed", 12))
     centro_acopio_combobox.place(x=570, y=20)
     centro_acopio_combobox.current(0)
 
@@ -35,7 +38,7 @@ def historial_transacciones(root):
     buscar_button.place(x=745, y=15)
 
     # Tabla de transacciones
-    columnas = ("Fecha", "Carnet estudiante", "Cantidad material", "Centro de acopio", "TecColones", "Tipo")
+    columnas = ("Fecha", "Carnet estudiante", "Centro de acopio", "Material:Cantidad", "TecColones", "Tipo")
     transacciones_tree = ttk.Treeview(transaccion_frame, columns=columnas, show="headings")
     transacciones_tree.place(x=20, y=60, width=760, height=280)
 
@@ -43,21 +46,10 @@ def historial_transacciones(root):
         transacciones_tree.heading(col, text=col)
         transacciones_tree.column(col, width=100)
 
-    # Datos de ejemplo
-    datos = [
-        ("12/10/2024", "102030330", "12", "CMF1", "-500", "Anulada"),
-        ("12/03/2024", "102030330", "34", "CMF1", "-500", "Anulada"),
-        ("12/23/2024", "102030330", "12", "CMF1", "457", "Anulada"),
-        ("05/09/2024", "155050350", "1", "CMFP", "10", "Aprobada"),
-        ("12/10/2024", "102030330", "12", "CMFP", "-500", "Anulada"),
-        ("12/03/2024", "102030330", "34", "CMFP", "-500", "Anulada"),
-        ("12/23/2024", "102030330", "12", "CMFP", "457", "Anulada"),
-        ("05/09/2024", "155050350", "1", "CMFP", "10", "Aprobada"),
-        ("09/02/2024", "199931200", "22", "CMF1", "1000", "Aprobada")
-    ]
-
-    for item in datos:
-        transacciones_tree.insert("", tk.END, values=item)
+   
+    datos = leer_datos_de_transacciones()
+    for fecha ,carnet, sede, material, costo, tipo  in datos:
+        transacciones_tree.insert("", tk.END, values=(fecha, carnet, sede, material, costo, tipo))       
 
     # Botón de Ver Detalles
     ver_detalles_button = tk.Button(transaccion_frame, text="Ver detalles", font=("Bahnschrift Condensed", 12), bg="#A5C0DD", command= lambda: mostrar_detalles())
@@ -111,7 +103,7 @@ def historial_transacciones(root):
         # Filtrar transacciones por fecha y centro de acopio
         for transaccion in datos:
             trans_fecha = datetime.datetime.strptime(transaccion[0], "%m/%d/%Y").date()
-            trans_centro_acopio = transaccion[3]
+            trans_centro_acopio = transaccion[2]
             if fecha_inicio <= trans_fecha <= fecha_final and trans_centro_acopio == centro_acopio_seleccionado:
                 transacciones_tree.insert("", tk.END, values=transaccion)
             
