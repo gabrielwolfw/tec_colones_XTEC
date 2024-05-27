@@ -26,7 +26,7 @@ def crear_transaccion_pntlla(root):
     
     material_Label = tk.Label(transaccion_frame, text="Seleccione el tipo de material:", font=("Bahnschrift Condensed", 14), bg="#A5C0DD")
     material_Label.place(x=20, y=117)
-    valores_combobox = transaccion_logica.obtener_valores_combobox()
+    valores_combobox = transaccion_logica.obtener_materiales_combobox()
     material_combobox = tk.ttk.Combobox(transaccion_frame, values=valores_combobox, font=("Bahnschrift Condensed", 14))
     material_combobox.place(x=228, y=119)
     material_combobox.current(0)

@@ -1,5 +1,1 @@
-2020002|cmd|Metalica:51|4590.00
-203030|sff|Metalica:2, metalicaaa:3|210.00
-2393|CMD|Metalica:2, Sprint 2:2|380.00
-1233|cmdf|Carton:12|120.00
-12090033|CCA15|Carton:12|120.00
+27/05/2024|290|CCA15|Carton:2|140.00|Aprobada

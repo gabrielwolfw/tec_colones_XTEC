@@ -23,22 +23,11 @@ def crear_transaccion(carnet_Entry,centro_combobox,total_tec_colones_Entry):
     else:
         messagebox.showerror("Error","El usuario no se encuentra en Cuenta Tec")
 
-def obtener_valores_combobox():
-    # Obtener la lista de materiales y sus valores del catálogo
-    lista_materiales = catalogo_materiales.obtener_lista_materiales()
-
-    # Crear una lista de cadenas con el formato "nombre, valor unitario"
-    valores_combobox = [f"{material['nombre']}, {material['valor_unitario']}" for material in lista_materiales]
-
-    return valores_combobox
-    
-def obtener_centros_acopio_combobox():
-    lista_centros_acopio = centro_acopio.obtener_identificadores()
-
-    valores_centros_acopio = [f"{centro}" for centro in lista_centros_acopio]
-    return valores_centros_acopio
 
 def agregar_material_transaccion(material_combobox, cantidad_Entry, materiales_ag,total_tec_colones_Entry):
+    if not validar_ingreso_datos_agregar_material(material_combobox, cantidad_Entry):
+        return
+    
     # Obtener el valor seleccionado en el Combobox y dividirlo para obtener el nombre del material y el valor unitario
     material_seleccionado = material_combobox.get()
     nombre_material, valor_unitario = material_seleccionado.split(', ')
@@ -65,16 +54,55 @@ def agregar_material_transaccion(material_combobox, cantidad_Entry, materiales_a
     total_tec_colones_Entry.config(state=tk.DISABLED)
 
 
+def obtener_materiales_combobox():
+    # Obtener la lista de materiales y sus valores del catálogo
+    lista_materiales = catalogo_materiales.obtener_lista_materiales()
 
-def continuar_click(carnet_Entry,centro_combobox,total_tec_colones_Entry):
-    # Mostrar un cuadro de diálogo de confirmación
+    # Crear una lista de cadenas con el formato "nombre, valor unitario"
+    valores_materailes = [f"{material['nombre']}, {material['valor_unitario']}" for material in lista_materiales]
+
+    return valores_materailes
+    
+def obtener_centros_acopio_combobox():
+    lista_centros_acopio = centro_acopio.obtener_identificadores()
+
+    valores_centros_acopio = [f"{centro}" for centro in lista_centros_acopio]
+    return valores_centros_acopio
+
+
+
+def continuar_click(carnet_Entry, centro_combobox, total_tec_colones_Entry):
+    # Verificar la validez de los datos de ingreso antes de proceder
+    if not validar_ingreso_datos_crear_transaccion(carnet_Entry, centro_combobox):
+        return
+
     respuesta = messagebox.askyesno("Confirmar transacción", "¿Está seguro de que desea realizar la transacción?")
-
-    # Verificar la respuesta del usuario
+    
     if respuesta:
         # Si el usuario hizo clic en "Sí", crear la transacción
-        crear_transaccion(carnet_Entry,centro_combobox,total_tec_colones_Entry)
+        crear_transaccion(carnet_Entry, centro_combobox, total_tec_colones_Entry)
         messagebox.showinfo("Transacción realizada", "La transacción se ha realizado con éxito.")
     else:
         # Si el usuario hizo clic en "No" o cerró el cuadro de diálogo, no hacer nada
         pass
+
+def validar_ingreso_datos_crear_transaccion(carnet_Entry, centro_combobox):
+    if carnet_Entry.get() == "":
+        messagebox.showerror("Error", "Debe ingresar un número de carné.")
+        return False
+    if centro_combobox.get() == "":
+        messagebox.showerror("Error", "Debe seleccionar un centro de acopio.")
+        return False
+    return True
+
+def validar_ingreso_datos_agregar_material(material_combobox, cantidad_Entry):
+    if material_combobox.get() == "":
+        messagebox.showerror("Error", "Debe seleccionar un material.")
+        return False
+    if cantidad_Entry.get() == "":
+        messagebox.showerror("Error", "Debe ingresar una cantidad.")
+        return False
+    if not cantidad_Entry.get().isdigit():
+        messagebox.showerror("Error", "La cantidad debe ser un número entero.")
+        return False
+    return True
