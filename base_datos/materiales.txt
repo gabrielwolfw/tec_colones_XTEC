@@ -1,14 +1,2 @@
-M-814747b4f27c|Metalica|kilogramo|90|Activo|2024-05-12 23:35:23|De lujo
-M-b27dadb24783|Pastico|kilogramo|90|Activo|2024-05-12 23:35:39|Limpio
-M-f2f4c891565d|metalicaaa|kilogramo|10|Activo|2024-05-13 01:25:03|sefe
-
-M-6330aa56103d|pastico|kilogramo|103|Activo|2024-05-13 01:25:36|sdf
-
-M-6a127063fc25|OPSDF|kilogramo|10|Activo|2024-05-13 01:25:57|sdf
-
-M-6ee489f97456|Plasticooo|kilogramo|10|Activo|2024-05-15 17:26:41|Botella
-
-M-305a03479ad1|Sprint 2|kilogramo|100|Activo|2024-05-15 18:27:54|
-
-M-82599848be68|PlasticoBrazileño|kilogramo|100|Activo|2024-05-26 12:06:26|De brazil
+M-320a6ff02c2d|Carton|kilogramo|10|Activo|2024-05-26 23:22:53|SF
 

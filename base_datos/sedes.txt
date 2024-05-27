@@ -4,3 +4,5 @@ TECSANJOSE|San José|12345678|activo
 TecSanCarlosMiLindaTierra|Cartago|12345678|activo
 TecHeredia|Heredia|12541254|activo
 TecLimon|Limón|23652365|activo
+TecMonterrey|San José|12345678|activo
+TecUSA|Alajuela|12345678|activo

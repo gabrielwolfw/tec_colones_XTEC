@@ -3,6 +3,7 @@ import secrets
 import hashlib
 from tkinter import messagebox
 
+from manejador_archivos import guardar_material_base_datos, cargar_materiales_desde_base_datos
 
 '''
 Clase para manejar el catálogo de materiales de reciclaje
@@ -11,9 +12,12 @@ class CatalogoMaterialesReciclaje:
     def __init__(self):
         self.materiales = []
         self.identificadores_existentes = set()
-        self.cargar_materiales_desde_base_datos()
-
-
+        self.cargar_datos_iniciales_materiales()
+    
+    def cargar_datos_iniciales_materiales(self):
+        # Cargar materiales desde archivo
+        materiales_lista = cargar_materiales_desde_base_datos()
+        self.materiales.extend(materiales_lista)
     '''
     Método para crear un material de reciclaje
 
@@ -34,9 +38,8 @@ class CatalogoMaterialesReciclaje:
             "Descripcion": descripcion
         }
         self.agregar_material(material)
-        self.guardar_material_base_datos()
-        return True
-    
+        guardar_material_base_datos(material)
+        
     '''
     Método para agregar un material al catálogo
 
@@ -66,35 +69,6 @@ class CatalogoMaterialesReciclaje:
             key_id = f"M-{hash_token}"
             if key_id not in self.identificadores_existentes:
                 return key_id
-
-    def guardar_material_base_datos(self):
-        try:
-            with open('./base_datos/materiales.txt', 'a') as file:
-                material = self.materiales[-1]  # Get the last material added
-                material_str = f"{material['Identificador']}|{material['Material']}|{material['Unidad']}|{material['Valor unitario']}|{material['Estado']}|{material['Fecha de creacion']}|{material['Descripcion']}\n"
-                file.write(material_str)
-        except Exception as e:
-            messagebox.showerror("Error", f"Ha ocurrido un error al guardar en la base de datos: {str(e)}")
-        
-    def cargar_materiales_desde_base_datos(self):
-        try:
-            with open('./base_datos/materiales.txt', 'r') as file:
-                for line in file:
-                    datos = line.strip().split('|')
-                    if len(datos) >= 2:  # Asegurar que hay al menos dos elementos
-                        nombreMaterial = datos[1] # Corregir la codificación
-                        valorUnitario = datos[3]
-                        material = {
-                            "Material": nombreMaterial,
-                            "Valor unitario": valorUnitario
-                        }
-                        self.materiales.append(material)
-        except FileNotFoundError:
-            # Si el archivo no existe, no hacer nada
-            pass
-        except Exception as e:
-            messagebox.showerror("Error", f"Ha ocurrido un error al cargar la base de datos: {str(e)}")
-
 
     def obtener_precio_unitario(self,nombre_material):
         for material in self.materiales:
