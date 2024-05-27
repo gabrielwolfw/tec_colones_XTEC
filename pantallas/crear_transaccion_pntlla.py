@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from pantallas_logica.Verifica_Carnet import verifica_usuario_exise
 
 def crear_transaccion_pntlla(root):
     # Ocultar la ventana principal
@@ -64,7 +65,7 @@ def crear_transaccion_pntlla(root):
     salir_button = tk.Button(transaccion_frame, text="Salir", bg="#A5C0DD", font=("Bahnschrift Condensed", 12), command=lambda:close_window())
     salir_button.place(x=12, y=460)
     
-    continuar_button = tk.Button(transaccion_frame, text="Continuar", bg="#A5C0DD",font=("Bahnschrift Condensed", 12))
+    continuar_button = tk.Button(transaccion_frame, text="Continuar", bg="#A5C0DD",font=("Bahnschrift Condensed", 12), command=lambda:verifica_usuario_exise(carnet_Entry))
     continuar_button.place(x=530, y=460)
     
 
