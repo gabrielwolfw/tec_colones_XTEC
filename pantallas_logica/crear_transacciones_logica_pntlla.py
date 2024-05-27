@@ -75,7 +75,7 @@ def obtener_centros_acopio_combobox():
 
 def continuar_click(carnet_Entry, centro_combobox, total_tec_colones_Entry, cantidad_Entry, materiales_ag):
     # Verificar la validez de los datos de ingreso antes de proceder
-    if not validar_ingreso_datos_crear_transaccion(carnet_Entry, centro_combobox):
+    if not validar_ingreso_datos_crear_transaccion(carnet_Entry, centro_combobox,materiales_ag):
         return
 
     respuesta = messagebox.askyesno("Confirmar transacción", "¿Está seguro de que desea realizar la transacción?")
@@ -89,12 +89,15 @@ def continuar_click(carnet_Entry, centro_combobox, total_tec_colones_Entry, cant
         # Si el usuario hizo clic en "No" o cerró el cuadro de diálogo, no hacer nada
         pass
 
-def validar_ingreso_datos_crear_transaccion(carnet_Entry, centro_combobox):
+def validar_ingreso_datos_crear_transaccion(carnet_Entry, centro_combobox,materiales_ag):
     if carnet_Entry.get() == "":
         messagebox.showerror("Error", "Debe ingresar un número de carné.")
         return False
     if centro_combobox.get() == "":
         messagebox.showerror("Error", "Debe seleccionar un centro de acopio.")
+        return False
+    if len(materiales_ag.get_children()) == 0:
+        messagebox.showerror("Error", "Debe agregar al menos un material.")
         return False
     return True
 
