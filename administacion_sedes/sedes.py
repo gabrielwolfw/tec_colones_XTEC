@@ -6,6 +6,7 @@ class Sedes:
         self.identificadores_existentes = set()
 
     def crear_sede(self, nombre, ubicacion, numero_contacto, estado):
+        self.sedes = []
         sede = {
             "Nombre": nombre,
             "Ubicación": ubicacion,
