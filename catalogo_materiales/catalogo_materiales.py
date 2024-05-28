@@ -63,11 +63,3 @@ class CatalogoMaterialesReciclaje:
         lista_materiales = cargar_materiales_desde_base_datos()
         self.lista_materiales_precio = lista_materiales
         return self.lista_materiales_precio
-
-
-# Crear una instancia de CatalogoMaterialesReciclaje
-catalogo = CatalogoMaterialesReciclaje()
-
-# Obtener la lista de materiales con sus valores unitarios
-lista_materiales = catalogo.obtener_lista_materiales()
-print(lista_materiales)

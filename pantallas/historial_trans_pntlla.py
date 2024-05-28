@@ -2,10 +2,10 @@ import tkinter as tk
 from tkinter import ttk
 import datetime
 from tkcalendar import DateEntry
-from manejador_archivos.transacciones_manejador_archivos import leer_datos_de_transacciones
 import pantallas_logica.crear_transacciones_logica_pntlla as transaccion_logica
+from pantallas_logica.historial_trans_logica_pantlla import ingresa_datos_transacciones,buscar_transacciones,abrir_mostrar_detalles,close_window
 
-transacción_seleccionada= None
+
 
 def historial_transacciones(root):
     # Ocultar la ventana principal
@@ -34,7 +34,7 @@ def historial_transacciones(root):
     centro_acopio_combobox.place(x=570, y=20)
     centro_acopio_combobox.current(0)
 
-    buscar_button = tk.Button(transaccion_frame, text="Buscar", font=("Bahnschrift Condensed", 12), bg="#A5C0DD", command= lambda: buscar_transacciones())
+    buscar_button = tk.Button(transaccion_frame, text="Buscar", font=("Bahnschrift Condensed", 12), bg="#A5C0DD", command= lambda: buscar_transacciones(transacciones_tree,fecha_inicio_entry,fecha_final_entry,centro_acopio_combobox))
     buscar_button.place(x=745, y=15)
 
     # Tabla de transacciones
@@ -42,70 +42,19 @@ def historial_transacciones(root):
     transacciones_tree = ttk.Treeview(transaccion_frame, columns=columnas, show="headings")
     transacciones_tree.place(x=20, y=60, width=760, height=280)
 
-    for col in columnas:
-        transacciones_tree.heading(col, text=col)
-        transacciones_tree.column(col, width=100)
 
-   
-    datos = leer_datos_de_transacciones()
-    for fecha ,carnet, sede, material, costo, tipo  in datos:
-        transacciones_tree.insert("", tk.END, values=(fecha, carnet, sede, material, costo, tipo))       
+
+    ingresa_datos_transacciones(transacciones_tree,columnas)
+    
 
     # Botón de Ver Detalles
-    ver_detalles_button = tk.Button(transaccion_frame, text="Ver detalles", font=("Bahnschrift Condensed", 12), bg="#A5C0DD", command= lambda: mostrar_detalles())
+    ver_detalles_button = tk.Button(transaccion_frame, text="Ver detalles", font=("Bahnschrift Condensed", 12), bg="#A5C0DD", command= lambda: abrir_mostrar_detalles(transacciones_tree,transaccion_frame))
     ver_detalles_button.place(x=695, y=350)
 
     # Botón de Salir
-    salir_button = tk.Button(transaccion_frame, text="Salir", font=("Bahnschrift Condensed", 12), bg="#A5C0DD", command=lambda: close_window())
+    salir_button = tk.Button(transaccion_frame, text="Salir", font=("Bahnschrift Condensed", 12), bg="#A5C0DD", command=lambda: close_window(root, transaccion_frame))
     salir_button.place(x=20, y=350)
 
-    def close_window():
-        # Mostrar nuevamente la ventana principal
-        root.deiconify()
-        transaccion_frame.destroy()
-        
-    def mostrar_detalles():
-        # Obtener la transacción seleccionada
-        global transaccion_seleccionada
-        transaccion_seleccionada = transacciones_tree.focus()
-        if transaccion_seleccionada:
-            valores = transacciones_tree.item(transaccion_seleccionada)['values']
-            fecha, carnet_estudiante, cantidad_material, centro_acopio, tec_colones, tipo = valores
 
-            # Función para mostrar la ventana emergente con los detalles de la transacción
-            detalles_frame = tk.Toplevel(transaccion_frame)
-            detalles_frame.title("Detalles de la transacción")
-            detalles_frame.geometry("400x300")
-
-            # Labels con los detalles
-            fecha_label = tk.Label(detalles_frame, text=f"Fecha: {fecha}", font=("Bahnschrift Condensed", 12))
-            fecha_label.place(x=20, y=20)
-            carnet_label = tk.Label(detalles_frame, text=f"Carnet del estudiante: {carnet_estudiante}", font=("Bahnschrift Condensed", 12))
-            carnet_label.place(x=20, y=50)
-            cantidad_label = tk.Label(detalles_frame, text=f"Centro de acopio: {cantidad_material}", font=("Bahnschrift Condensed", 12))
-            cantidad_label.place(x=20, y=80)
-            centro_label = tk.Label(detalles_frame, text=f"Material:Cantidad: {centro_acopio}", font=("Bahnschrift Condensed", 12))
-            centro_label.place(x=20, y=110)
-            tec_colones_label = tk.Label(detalles_frame, text=f"TecColones: {tec_colones}", font=("Bahnschrift Condensed", 12))
-            tec_colones_label.place(x=20, y=140)
-            tipo_label = tk.Label(detalles_frame, text=f"Tipo: {tipo}", font=("Bahnschrift Condensed", 12))
-            tipo_label.place(x=20, y=170)
             
-    def buscar_transacciones():
-        fecha_inicio = fecha_inicio_entry.get_date()
-        fecha_final = fecha_final_entry.get_date()
-        centro_acopio_seleccionado = centro_acopio_combobox.get()
-
-        # Limpiar tabla de transacciones
-        for item in transacciones_tree.get_children():
-            transacciones_tree.delete(item)
-
-        # Filtrar transacciones por fecha y centro de acopio
-        for transaccion in datos:
-            trans_fecha = datetime.datetime.strptime(transaccion[0], "%m/%d/%Y").date()
-            trans_centro_acopio = transaccion[2]
-            if fecha_inicio <= trans_fecha <= fecha_final and trans_centro_acopio == centro_acopio_seleccionado:
-                transacciones_tree.insert("", tk.END, values=transaccion)
-            
-            
-    transaccion_frame.protocol("WM_DELETE_WINDOW", close_window)
+    transaccion_frame.protocol("WM_DELETE_WINDOW", lambda: close_window(root, transaccion_frame))

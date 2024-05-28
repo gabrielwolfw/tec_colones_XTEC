@@ -125,3 +125,8 @@ def limpiar_campos_transaccion(carnet_Entry, centro_combobox, cantidad_Entry, ma
 def limpiar_campos_agregar_material(material_combobox, cantidad_Entry):
     material_combobox.set("")
     cantidad_Entry.delete(0, tk.END)
+
+def close_window(root,transaccion_frame):
+    # Mostrar nuevamente la ventana principal
+    root.deiconify()
+    transaccion_frame.destroy()

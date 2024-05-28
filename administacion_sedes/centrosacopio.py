@@ -28,7 +28,6 @@ class CentrosAcopio:
     def obtener_sedes(self):
         sedes = cargar_sedes_desde_archivo()
         self.sedes_existentes = sedes
-        print(self.sedes_existentes)
         return self.sedes_existentes
 
     

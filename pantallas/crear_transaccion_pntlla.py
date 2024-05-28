@@ -65,21 +65,13 @@ def crear_transaccion_pntlla(root):
     agregar_button = tk.Button(transaccion_frame, text="Agregar", bg="#A5C0DD",command=lambda:transaccion_logica.agregar_material_transaccion(material_combobox,cantidad_Entry,materiales_ag,total_tec_colones_Entry))
     agregar_button.place(x=365, y=210)
     
-    salir_button = tk.Button(transaccion_frame, text="Salir", bg="#A5C0DD", font=("Bahnschrift Condensed", 12), command=lambda:close_window())
+    salir_button = tk.Button(transaccion_frame, text="Salir", bg="#A5C0DD", font=("Bahnschrift Condensed", 12), command=lambda:transaccion_logica.close_window(root,transaccion_frame))
     salir_button.place(x=12, y=460)
     
     continuar_button = tk.Button(transaccion_frame, text="Continuar", bg="#A5C0DD",font=("Bahnschrift Condensed", 12), command=lambda:transaccion_logica.continuar_click(carnet_Entry, centro_combobox, total_tec_colones_Entry, cantidad_Entry, materiales_ag))
     continuar_button.place(x=530, y=460)
 
-    
-    
 
-    
 
-    def close_window():
-        # Mostrar nuevamente la ventana principal
-        root.deiconify()
-        transaccion_frame.destroy()
-
-    transaccion_frame.protocol("WM_DELETE_WINDOW", close_window)
+    transaccion_frame.protocol("WM_DELETE_WINDOW", lambda:transaccion_logica.close_window(root,transaccion_frame))
 
