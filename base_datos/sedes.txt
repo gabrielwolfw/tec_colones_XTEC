@@ -3,4 +3,4 @@ TecLimon|Limï¿½n|23652365|activo
 TecMonterrey|San Josï¿½|12345678|activo
 TecUSA|Alajuela|12345678|activo
 TecCartago|Cartago|96857429|activo
-TecSanJose|San José|52634896|activo
+TecSanJose|San José|29304050|activo
