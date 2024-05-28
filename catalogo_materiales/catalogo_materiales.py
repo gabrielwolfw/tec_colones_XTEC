@@ -12,23 +12,13 @@ class CatalogoMaterialesReciclaje:
     def __init__(self):
         self.materiales = []
         self.identificadores_existentes = set()
-        self.cargar_datos_iniciales_materiales()
+        self.lista_materiales_precio = []
+        self.obtener_lista_materiales()
     
-    def cargar_datos_iniciales_materiales(self):
-        # Cargar materiales desde archivo
-        materiales_lista = cargar_materiales_desde_base_datos()
-        self.materiales.extend(materiales_lista)
-    '''
-    Método para crear un material de reciclaje
 
-    Parametros: nombreMaterial (str): Nombre del material
-                unidad (str): Unidad del material
-                valorUnitario (int): Valor unitario del material en Tec_Colones
-                descripcion (str): Descripción del material
-    '''
     def crear_material_reciclaje(self, nombreMaterial, unidad, valorUnitario, descripcion):
         estado = "Activo"
-        fechaCreacion = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        fechaCreacion = datetime.datetime.now().strftime("%Y-%m-%d")
         material = {
             "Material": nombreMaterial,
             "Unidad": unidad,
@@ -40,11 +30,7 @@ class CatalogoMaterialesReciclaje:
         self.agregar_material(material)
         guardar_material_base_datos(material)
         
-    '''
-    Método para agregar un material al catálogo
-
-    Paramentros: material (dict): Diccionario con la información del material
-    '''
+    
     def agregar_material(self, material):
         material['Identificador'] = self.generar_identificador_unico()
         self.materiales.append(material)
@@ -69,28 +55,11 @@ class CatalogoMaterialesReciclaje:
             key_id = f"M-{hash_token}"
             if key_id not in self.identificadores_existentes:
                 return key_id
-
-    def obtener_precio_unitario(self,nombre_material):
-        for material in self.materiales:
-            if material['Material'] == nombre_material:
-                return material['Valor unitario']
-        return None  # Si no se encuentra el material
     
     '''
     Obtiene una lista de materiales unicamente con el nombre y valor unitario
     '''
     def obtener_lista_materiales(self):
-        lista_materiales = []
-        for material in self.materiales:
-            lista_materiales.append({
-                "nombre": material["Material"],
-                "valor_unitario": material["Valor unitario"]
-            })
-        return lista_materiales
-
-# Crear una instancia de CatalogoMaterialesReciclaje
-catalogo = CatalogoMaterialesReciclaje()
-
-# Obtener la lista de materiales con sus valores unitarios
-lista_materiales = catalogo.obtener_lista_materiales()
-print(lista_materiales)
+        lista_materiales = cargar_materiales_desde_base_datos()
+        self.lista_materiales_precio = lista_materiales
+        return self.lista_materiales_precio

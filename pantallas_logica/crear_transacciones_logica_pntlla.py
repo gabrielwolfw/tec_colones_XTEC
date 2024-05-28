@@ -5,6 +5,7 @@ from administacion_sedes import CentrosAcopio
 from catalogo_materiales import CatalogoMaterialesReciclaje
 from pantallas_logica.Verifica_Carnet import verifica_usuario_exise
 from gestion_transacciones import Transacciones
+from manejador_archivos import cargar_centros_acopio_desde_archivo
 
 
 transaccion = Transacciones()
@@ -59,17 +60,14 @@ def agregar_material_transaccion(material_combobox, cantidad_Entry, materiales_a
 def obtener_materiales_combobox():
     # Obtener la lista de materiales y sus valores del catálogo
     lista_materiales = catalogo_materiales.obtener_lista_materiales()
-
     # Crear una lista de cadenas con el formato "nombre, valor unitario"
-    valores_materailes = [f"{material['nombre']}, {material['valor_unitario']}" for material in lista_materiales]
+    valores_materiales = [f"{material['Material']}, {material['Valor unitario']}" for material in lista_materiales]
 
-    return valores_materailes
+    return valores_materiales
     
 def obtener_centros_acopio_combobox():
-    lista_centros_acopio = centro_acopio.obtener_identificadores()
-
-    valores_centros_acopio = [f"{centro}" for centro in lista_centros_acopio]
-    return valores_centros_acopio
+    centros_acopio_list = centro_acopio.obtener_identificadores()
+    return centros_acopio_list
 
 
 
@@ -90,8 +88,9 @@ def continuar_click(carnet_Entry, centro_combobox, total_tec_colones_Entry, cant
         pass
 
 def validar_ingreso_datos_crear_transaccion(carnet_Entry, centro_combobox,materiales_ag):
-    if carnet_Entry.get() == "":
-        messagebox.showerror("Error", "Debe ingresar un número de carné.")
+    carnet = carnet_Entry.get()
+    if len(carnet) != 10 or not carnet.isdigit():
+        messagebox.showerror("Error", "El número de carné debe tener exactamente 10 dígitos.")
         return False
     if centro_combobox.get() == "":
         messagebox.showerror("Error", "Debe seleccionar un centro de acopio.")
@@ -127,3 +126,8 @@ def limpiar_campos_transaccion(carnet_Entry, centro_combobox, cantidad_Entry, ma
 def limpiar_campos_agregar_material(material_combobox, cantidad_Entry):
     material_combobox.set("")
     cantidad_Entry.delete(0, tk.END)
+
+def close_window(root,transaccion_frame):
+    # Mostrar nuevamente la ventana principal
+    root.deiconify()
+    transaccion_frame.destroy()
