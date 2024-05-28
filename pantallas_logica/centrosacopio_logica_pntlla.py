@@ -1,3 +1,4 @@
+
 from tkinter import messagebox
 import tkinter as tk
 from administacion_sedes import CentrosAcopio
@@ -32,6 +33,9 @@ def obtener_sedes_combobox():
 
 def validar_input_centro_acopio(sede, numero_contacto, identificador):
     try:
+        if not identificador:
+            messagebox.showerror("Error", "Debe ingresar un identificador para el centro de acopio")
+            return False
         if sede not in centro_acopio.sedes_existentes:
             messagebox.showerror("Error", "La sede no existe")
             return False
