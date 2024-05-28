@@ -5,6 +5,7 @@ from administacion_sedes import CentrosAcopio
 from catalogo_materiales import CatalogoMaterialesReciclaje
 from pantallas_logica.Verifica_Carnet import verifica_usuario_exise
 from gestion_transacciones import Transacciones
+from manejador_archivos import cargar_centros_acopio_desde_archivo
 
 
 transaccion = Transacciones()
@@ -59,17 +60,14 @@ def agregar_material_transaccion(material_combobox, cantidad_Entry, materiales_a
 def obtener_materiales_combobox():
     # Obtener la lista de materiales y sus valores del catálogo
     lista_materiales = catalogo_materiales.obtener_lista_materiales()
-
     # Crear una lista de cadenas con el formato "nombre, valor unitario"
-    valores_materailes = [f"{material['nombre']}, {material['valor_unitario']}" for material in lista_materiales]
+    valores_materiales = [f"{material['Material']}, {material['Valor unitario']}" for material in lista_materiales]
 
-    return valores_materailes
+    return valores_materiales
     
 def obtener_centros_acopio_combobox():
-    lista_centros_acopio = centro_acopio.obtener_identificadores()
-
-    valores_centros_acopio = [f"{centro}" for centro in lista_centros_acopio]
-    return valores_centros_acopio
+    centros_acopio_list = centro_acopio.obtener_identificadores()
+    return centros_acopio_list
 
 
 
