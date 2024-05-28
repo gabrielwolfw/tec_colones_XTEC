@@ -4,7 +4,7 @@ import datetime
 from tkcalendar import DateEntry
 import pantallas_logica.crear_transacciones_logica_pntlla as transaccion_logica
 from pantallas_logica.historial_trans_logica_pantlla import ingresa_datos_transacciones,buscar_transacciones,abrir_mostrar_detalles,close_window
-
+from manejador_archivos.transacciones_manejador_archivos import leer_datos_de_transacciones
 
 
 def historial_transacciones(root):
@@ -34,7 +34,9 @@ def historial_transacciones(root):
     centro_acopio_combobox.place(x=570, y=20)
     centro_acopio_combobox.current(0)
 
-    buscar_button = tk.Button(transaccion_frame, text="Buscar", font=("Bahnschrift Condensed", 12), bg="#A5C0DD", command= lambda: buscar_transacciones(transacciones_tree,fecha_inicio_entry,fecha_final_entry,centro_acopio_combobox))
+    datos = leer_datos_de_transacciones()
+
+    buscar_button = tk.Button(transaccion_frame, text="Buscar", font=("Bahnschrift Condensed", 12), bg="#A5C0DD", command= lambda: buscar_transacciones(transacciones_tree,fecha_inicio_entry,fecha_final_entry,centro_acopio_combobox,datos))
     buscar_button.place(x=745, y=15)
 
     # Tabla de transacciones
@@ -44,7 +46,7 @@ def historial_transacciones(root):
 
 
 
-    ingresa_datos_transacciones(transacciones_tree,columnas)
+    ingresa_datos_transacciones(transacciones_tree,columnas,datos)
     
 
     # Botón de Ver Detalles

@@ -1,19 +1,19 @@
 
 import tkinter as tk
-from manejador_archivos.transacciones_manejador_archivos import leer_datos_de_transacciones
+
 from pantallas.mostrar_detalles_pantlla import mostrar_detalles
 import datetime
 
-datos = leer_datos_de_transacciones()
+
 transacción_seleccionada = None
-def ingresa_datos_transacciones(transacciones_tree,columnas):
+def ingresa_datos_transacciones(transacciones_tree,columnas,datos):
     for col in columnas:
         transacciones_tree.heading(col, text=col)
         transacciones_tree.column(col, width=100)
     for fecha ,carnet, sede, material, costo, tipo  in datos:
         transacciones_tree.insert("", tk.END, values=(fecha, carnet, sede, material, costo, tipo))   
 
-def buscar_transacciones(transacciones_tree,fecha_inicio_entry,fecha_final_entry,centro_acopio_combobox):
+def buscar_transacciones(transacciones_tree,fecha_inicio_entry,fecha_final_entry,centro_acopio_combobox,datos):
     fecha_inicio = fecha_inicio_entry.get_date()
     fecha_final = fecha_final_entry.get_date()
     centro_acopio_seleccionado = centro_acopio_combobox.get()
