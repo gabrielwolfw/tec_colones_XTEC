@@ -88,8 +88,9 @@ def continuar_click(carnet_Entry, centro_combobox, total_tec_colones_Entry, cant
         pass
 
 def validar_ingreso_datos_crear_transaccion(carnet_Entry, centro_combobox,materiales_ag):
-    if carnet_Entry.get() == "":
-        messagebox.showerror("Error", "Debe ingresar un número de carné.")
+    carnet = carnet_Entry.get()
+    if len(carnet) != 10 or not carnet.isdigit():
+        messagebox.showerror("Error", "El número de carné debe tener exactamente 10 dígitos.")
         return False
     if centro_combobox.get() == "":
         messagebox.showerror("Error", "Debe seleccionar un centro de acopio.")
