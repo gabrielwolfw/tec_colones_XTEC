@@ -1,11 +1,13 @@
 import tkinter as tk
 from tkinter import messagebox
+import os
 
 from administacion_sedes import CentrosAcopio
 from catalogo_materiales import CatalogoMaterialesReciclaje
 from pantallas_logica.Verifica_Carnet import verifica_usuario_exise
 from gestion_transacciones import Transacciones
 from manejador_archivos import cargar_centros_acopio_desde_archivo
+from manejador_archivos import validar_existencia_archivo_transacciones
 
 
 transaccion = Transacciones()
@@ -13,6 +15,8 @@ catalogo_materiales = CatalogoMaterialesReciclaje()
 centro_acopio = CentrosAcopio()
 
 def crear_transaccion(carnet_Entry,centro_combobox,total_tec_colones_Entry):
+    if not validar_existencia_archivo_transacciones():
+        return
     # Obtener los datos ingresados por el usuario
     numero_carnet = carnet_Entry.get()
     centro_acopio = centro_combobox.get()
@@ -21,6 +25,7 @@ def crear_transaccion(carnet_Entry,centro_combobox,total_tec_colones_Entry):
     # Crear una instancia de la clase Transaccion
     if verifica_usuario_exise(numero_carnet):
         transaccion.crear_transaccion(numero_carnet,centro_acopio,total_tec_colones)
+        messagebox.showinfo("Transacción realizada", "La transacción se ha realizado con éxito.")
     else:
         messagebox.showerror("Error","El usuario no se encuentra en Cuenta Tec")
 
@@ -75,13 +80,11 @@ def continuar_click(carnet_Entry, centro_combobox, total_tec_colones_Entry, cant
     # Verificar la validez de los datos de ingreso antes de proceder
     if not validar_ingreso_datos_crear_transaccion(carnet_Entry, centro_combobox,materiales_ag):
         return
-
     respuesta = messagebox.askyesno("Confirmar transacción", "¿Está seguro de que desea realizar la transacción?")
     
     if respuesta:
         # Si el usuario hizo clic en "Sí", crear la transacción
         crear_transaccion(carnet_Entry, centro_combobox, total_tec_colones_Entry)
-        messagebox.showinfo("Transacción realizada", "La transacción se ha realizado con éxito.")
         limpiar_campos_transaccion(carnet_Entry, centro_combobox, cantidad_Entry, materiales_ag, total_tec_colones_Entry)
     else:
         # Si el usuario hizo clic en "No" o cerró el cuadro de diálogo, no hacer nada
