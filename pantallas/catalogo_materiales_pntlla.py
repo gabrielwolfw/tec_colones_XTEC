@@ -62,6 +62,10 @@ def catalogo_materiales_pantalla(root):
                                                                                           lista_text), font=("Bahnschrift Condensed", 14))
     crear_button.grid(row=4, column=0, columnspan=2, padx=5, pady=5)
     actualizar_lista(lista_text)
+    
+    # Botón de Salir
+    salir_button = tk.Button(catalogo_frame, text="Salir", font=("Bahnschrift Condensed", 12), bg="#A5C0DD",command=lambda: close_window())
+    salir_button.place(x=775, y=250)
 
     
 

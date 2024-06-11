@@ -16,10 +16,10 @@ def mostrar_pantalla_admin(root):
     crear_button_centroacopio.place(x=250, y=150)
 
     crear_button_historial_ca = tk.Button(root, text="Historial de transacciones", font=("Bahnschrift Condensed", 14), fg="black", bg="#A5C0DD", borderwidth=4, command=lambda: historial_transacciones(root))
-    crear_button_historial_ca.place(x=250, y=250)
+    crear_button_historial_ca.place(x=250, y=200)
     
     cerrar_sesion_button = tk.Button(root, text="Cerrar Sesión", font=("Bahnschrift Condensed", 14), fg="black", bg="#A5C0DD", borderwidth=4, command=lambda:cerrar_sesion(root))
-    cerrar_sesion_button.place(x=250, y=300)
+    cerrar_sesion_button.place(x=250, y=250)
     
 def mostrar_pantalla_encargado(root):
     # Mostrar la ventana principal
@@ -29,13 +29,13 @@ def mostrar_pantalla_encargado(root):
     crear_button_catalogomateriales.place(x=250, y=50)
 
     crear_button_transaccion = tk.Button(root, text="Crear transacción", font=("Bahnschrift Condensed", 14), fg="black", bg="#A5C0DD", borderwidth=4, command=lambda: crear_transaccion_pntlla(root))
-    crear_button_transaccion.place(x=250, y=200)
+    crear_button_transaccion.place(x=250, y=100)
 
     crear_button_historial_ca = tk.Button(root, text="Historial de transacciones", font=("Bahnschrift Condensed", 14), fg="black", bg="#A5C0DD", borderwidth=4, command=lambda: historial_transacciones(root))
-    crear_button_historial_ca.place(x=250, y=250)
+    crear_button_historial_ca.place(x=250, y=150)
     
     cerrar_sesion_button = tk.Button(root, text="Cerrar Sesión", font=("Bahnschrift Condensed", 14), fg="black", bg="#A5C0DD", borderwidth=4, command=lambda:cerrar_sesion(root))
-    cerrar_sesion_button.place(x=250, y=300)
+    cerrar_sesion_button.place(x=250, y=200)
     
 def mostrar_pantalla_estudiante(root):
     # Mostrar la ventana principal
