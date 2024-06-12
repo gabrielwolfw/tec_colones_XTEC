@@ -120,6 +120,10 @@ def historial_transacciones(root):
             messagebox.showerror("Error", f"Error al obtener las fechas o el centro de acopio: {e}")
             return
 
+            #Verifica que la fecha final sea mayor a la inicial
+        if fecha_inicio > fecha_final:
+            messagebox.showerror("Error", "La fehca inicial no puede ser mayor a la fehca final.")
+            return
         # Limpiar tabla de transacciones
         for item in transacciones_tree.get_children():
             transacciones_tree.delete(item)
