@@ -15,7 +15,9 @@ catalogo_materiales = CatalogoMaterialesReciclaje()
 centro_acopio = CentrosAcopio()
 
 def crear_transaccion(carnet_Entry, centro_combobox, materiales_ag, cantidad_Entry, total_tec_colones_Entry):
-
+    if not validar_existencia_archivo_transacciones():
+        messagebox.showerror("Error", "El archivo transacciones.txt no existe. Por favor, comuníquese con el administrador del sistema.")
+        return
     # Obtener los datos ingresados por el usuario
     numero_carnet = carnet_Entry.get()
     centro_acopio = centro_combobox.get()
@@ -83,9 +85,7 @@ def obtener_centros_acopio_combobox():
 
 def continuar_click(carnet_Entry, centro_combobox, total_tec_colones_Entry, cantidad_Entry, materiales_ag):
 
-    if not validar_existencia_archivo_transacciones():
-        messagebox.showerror("Error", "El archivo transacciones.txt no existe. Por favor, comuníquese con el administrador del sistema.")
-        return
+
     
     # Verificar la validez de los datos de ingreso antes de proceder
     if not validar_ingreso_datos_crear_transaccion(centro_combobox,materiales_ag):
