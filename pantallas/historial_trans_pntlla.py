@@ -5,6 +5,7 @@ import datetime
 from tkcalendar import DateEntry
 from manejador_archivos.transacciones_manejador_archivos import leer_datos_de_transacciones
 import pantallas_logica.crear_transacciones_logica_pntlla as transaccion_logica
+from pantallas.mostrar_detalles_pantlla import mostrar_detalles
 
 transacción_seleccionada = None
 
@@ -56,8 +57,8 @@ def historial_transacciones(root):
         transacciones_tree.insert("", tk.END, values=(fecha, carnet, sede, material, costo, tipo))
 
         # Botón de Ver Detalles
-    ver_detalles_button = tk.Button(transaccion_frame, text="Ver detalles", font=("Bahnschrift Condensed", 12),
-                                    bg="#A5C0DD", command=lambda: mostrar_detalles())
+    ver_detalles_button = tk.Button(transaccion_frame, text="Ver detalles", font=("Bahnschrift Condensed", 12), bg="#A5C0DD",
+                                    command=lambda: mostrar_transaccion_detalles())
     ver_detalles_button.place(x=695, y=350)
 
     # Botón de Salir
@@ -70,41 +71,18 @@ def historial_transacciones(root):
         root.deiconify()
         transaccion_frame.destroy()
 
-    def mostrar_detalles():
-        try:
-            # Obtener la transacción seleccionada
-            global transaccion_seleccionada
-            transaccion_seleccionada = transacciones_tree.focus()
-            if transaccion_seleccionada:
-                valores = transacciones_tree.item(transaccion_seleccionada)['values']
+    def mostrar_transaccion_detalles():
+        # Obtener la transacción seleccionada
+        transaccion_seleccionada = transacciones_tree.focus()
+        if transaccion_seleccionada:
+            valores = transacciones_tree.item(transaccion_seleccionada)['values']
+            if valores:
                 fecha, carnet_estudiante, cantidad_material, centro_acopio, tec_colones, tipo = valores
-        except (IndexError, ValueError) as e:
-            # Manejar errores de obtención de valores o datos faltantes
-            print(f"Error al obtener los valores de la transacción: {e}")
-            return
-
-            # Función para mostrar la ventana emergente con los detalles de la transacción
-            detalles_frame = tk.Toplevel(transaccion_frame)
-            detalles_frame.title("Detalles de la transacción")
-            detalles_frame.geometry("400x300")
-
-            # Labels con los detalles
-            fecha_label = tk.Label(detalles_frame, text=f"Fecha: {fecha}", font=("Bahnschrift Condensed", 12))
-            fecha_label.place(x=20, y=20)
-            carnet_label = tk.Label(detalles_frame, text=f"Carnet del estudiante: {carnet_estudiante}",
-                                    font=("Bahnschrift Condensed", 12))
-            carnet_label.place(x=20, y=50)
-            cantidad_label = tk.Label(detalles_frame, text=f"Centro de acopio: {cantidad_material}",
-                                      font=("Bahnschrift Condensed", 12))
-            cantidad_label.place(x=20, y=80)
-            centro_label = tk.Label(detalles_frame, text=f"Material:Cantidad: {centro_acopio}",
-                                    font=("Bahnschrift Condensed", 12))
-            centro_label.place(x=20, y=110)
-            tec_colones_label = tk.Label(detalles_frame, text=f"TecColones: {tec_colones}",
-                                         font=("Bahnschrift Condensed", 12))
-            tec_colones_label.place(x=20, y=140)
-            tipo_label = tk.Label(detalles_frame, text=f"Tipo: {tipo}", font=("Bahnschrift Condensed", 12))
-            tipo_label.place(x=20, y=170)
+                mostrar_detalles(fecha, carnet_estudiante, cantidad_material, centro_acopio, tec_colones, tipo, transaccion_frame)
+            else:
+                messagebox.showwarning("Advertencia", "No se ha seleccionado ninguna transacción.")
+        else:
+            messagebox.showwarning("Advertencia", "No se ha seleccionado ninguna transacción.")
 
     def buscar_transacciones():
         try:
@@ -125,6 +103,7 @@ def historial_transacciones(root):
             transacciones_tree.delete(item)
 
         # Filtrar transacciones por fecha y centro de acopio
+        filtered_transactions = []
         for transaccion in datos:
             try:
                 trans_fecha = datetime.datetime.strptime(transaccion[0], "%m/%d/%Y").date()
@@ -134,6 +113,13 @@ def historial_transacciones(root):
                 continue
             trans_centro_acopio = transaccion[2]
             if fecha_inicio <= trans_fecha <= fecha_final and trans_centro_acopio == centro_acopio_seleccionado:
+                filtered_transactions.append(transaccion)
+
+        # Verificar si no se encontraron transacciones
+        if not filtered_transactions:
+            messagebox.showinfo("Información", "No se encontraron transacciones para los criterios seleccionados.")
+        else:
+            for transaccion in filtered_transactions:
                 transacciones_tree.insert("", tk.END, values=transaccion)
 
     transaccion_frame.protocol("WM_DELETE_WINDOW", close_window)
