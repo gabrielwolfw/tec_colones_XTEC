@@ -25,7 +25,7 @@ def buscar_transacciones(transacciones_tree,fecha_inicio_entry,fecha_final_entry
     # Filtrar transacciones por fecha y centro de acopio
     for transaccion in datos:
         trans_fecha = datetime.datetime.strptime(transaccion[0], "%m/%d/%Y").date()
-        trans_centro_acopio = transaccion[2]
+        trans_centro_acopio = transaccion[3]
         if fecha_inicio <= trans_fecha <= fecha_final and trans_centro_acopio == centro_acopio_seleccionado:
             transacciones_tree.insert("", tk.END, values=transaccion)
 
@@ -33,8 +33,8 @@ def abrir_mostrar_detalles(transacciones_tree,transaccion_frame):
     transaccion_seleccionada = transacciones_tree.focus()
     if transaccion_seleccionada:
         valores = transacciones_tree.item(transaccion_seleccionada)['values']
-        fecha, carnet_estudiante, cantidad_material, centro_acopio, tec_colones, tipo = valores
-        mostrar_detalles(fecha, carnet_estudiante, cantidad_material, centro_acopio, tec_colones, tipo,transaccion_frame)
+        fecha, carnet_estudiante, sede, centro_acopio, cantidad_material, tec_colones, tipo = valores
+        mostrar_detalles(fecha, carnet_estudiante, sede, centro_acopio, cantidad_material, tec_colones, tipo,transaccion_frame)
 
 def close_window(root, transaccion_frame):
     # Mostrar nuevamente la ventana principal

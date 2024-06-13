@@ -12,17 +12,16 @@ transaccion = Transacciones()
 catalogo_materiales = CatalogoMaterialesReciclaje()
 centro_acopio = CentrosAcopio()
 
-def crear_transaccion(carnet_Entry,centro_combobox,total_tec_colones_Entry):
+def crear_transaccion(carnet_Entry, sede, centro_combobox,total_tec_colones_Entry):
     # Obtener los datos ingresados por el usuario
     numero_carnet = carnet_Entry.get()
     centro_acopio = centro_combobox.get()
     total_tec_colones = total_tec_colones_Entry.get()
-
     # Crear una instancia de la clase Transaccion
     if verifica_usuario_exise(numero_carnet):
-        transaccion.crear_transaccion(numero_carnet,centro_acopio,total_tec_colones)
+        transaccion.crear_transaccion(numero_carnet, sede, centro_acopio,total_tec_colones)
     else:
-        messagebox.showerror("Error","El usuario no se encuentra en Cuenta Tec")
+        messagebox.showerror("Error", "El usuario no se encuentra en Cuenta Tec")
 
 
 def agregar_material_transaccion(material_combobox, cantidad_Entry, materiales_ag,total_tec_colones_Entry):
@@ -75,14 +74,16 @@ def continuar_click(carnet_Entry, centro_combobox, total_tec_colones_Entry, cant
     # Verificar la validez de los datos de ingreso antes de proceder
     if not validar_ingreso_datos_crear_transaccion(carnet_Entry, centro_combobox,materiales_ag):
         return
+    sede = CentrosAcopio.buscar_sede_por_identificador(centro_combobox.get())
+    print(sede)
 
     respuesta = messagebox.askyesno("Confirmar transacción", "¿Está seguro de que desea realizar la transacción?")
     
     if respuesta:
         # Si el usuario hizo clic en "Sí", crear la transacción
-        crear_transaccion(carnet_Entry, centro_combobox, total_tec_colones_Entry)
+        crear_transaccion(carnet_Entry, sede, centro_combobox, total_tec_colones_Entry)
         messagebox.showinfo("Transacción realizada", "La transacción se ha realizado con éxito.")
-        limpiar_campos_transaccion(carnet_Entry, centro_combobox, cantidad_Entry, materiales_ag, total_tec_colones_Entry)
+        limpiar_campos_transaccion(carnet_Entry, sede, centro_combobox, cantidad_Entry, materiales_ag, total_tec_colones_Entry)
     else:
         # Si el usuario hizo clic en "No" o cerró el cuadro de diálogo, no hacer nada
         pass
@@ -112,9 +113,10 @@ def validar_ingreso_datos_agregar_material(material_combobox, cantidad_Entry):
         return False
     return True
 
-def limpiar_campos_transaccion(carnet_Entry, centro_combobox, cantidad_Entry, materiales_ag, total_tec_colones_Entry):
+def limpiar_campos_transaccion(carnet_Entry, sede, centro_combobox, cantidad_Entry, materiales_ag, total_tec_colones_Entry):
     carnet_Entry.delete(0, tk.END)
     centro_combobox.set("")
+    sede = []
     cantidad_Entry.delete(0, tk.END)
     materiales_ag.delete(*materiales_ag.get_children())
     total_tec_colones_Entry.config(state=tk.NORMAL)

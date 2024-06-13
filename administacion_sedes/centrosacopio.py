@@ -1,5 +1,7 @@
 from tkinter import messagebox
-from manejador_archivos import cargar_centros_acopio_desde_archivo,cargar_sedes_desde_archivo,guardar_centro_acopio_base_datos
+from manejador_archivos import cargar_sede_y_centro_acopio_desde_archivo, cargar_centros_acopio_desde_archivo, \
+    cargar_sedes_desde_archivo, guardar_centro_acopio_base_datos
+
 
 class CentrosAcopio:
     def __init__(self):
@@ -24,13 +26,12 @@ class CentrosAcopio:
         self.sedes_existentes.append(centro_acopio["Sede"])
         self.identificadores_existentes.append(centro_acopio["Identificador"])
         return True
-    
+
     def obtener_sedes(self):
         sedes = cargar_sedes_desde_archivo()
         self.sedes_existentes = sedes
         return self.sedes_existentes
 
-    
     def obtener_identificadores(self):
         self.identificadores_existentes = []
         centros_acopio = cargar_centros_acopio_desde_archivo()
@@ -38,9 +39,11 @@ class CentrosAcopio:
             self.identificadores_existentes.append(centro["Identificador"])
         return self.identificadores_existentes
 
-
-
-
-
+    def buscar_sede_por_identificador(identificador_buscar):
+        centros_acopio_y_sede = cargar_sede_y_centro_acopio_desde_archivo()
+        for sede, identificador in centros_acopio_y_sede:
+            if identificador == identificador_buscar:
+                return sede
+        return None  # Retorna None si no se encuentra el identificador
 
 

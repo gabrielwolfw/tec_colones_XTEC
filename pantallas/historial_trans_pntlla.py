@@ -43,7 +43,7 @@ def historial_transacciones(root):
     buscar_button.place(x=745, y=15)
 
     # Tabla de transacciones
-    columnas = ("Fecha", "Carnet estudiante", "Centro de acopio", "Material:Cantidad", "TecColones", "Tipo")
+    columnas = ("Fecha", "Carnet estudiante", "Sede", "Centro de acopio", "Material:Cantidad", "TecColones", "Tipo")
     transacciones_tree = ttk.Treeview(transaccion_frame, columns=columnas, show="headings")
     transacciones_tree.place(x=20, y=60, width=760, height=280)
 
@@ -52,8 +52,8 @@ def historial_transacciones(root):
         transacciones_tree.column(col, width=100)
 
     datos = leer_datos_de_transacciones()
-    for fecha, carnet, sede, material, costo, tipo in datos:
-        transacciones_tree.insert("", tk.END, values=(fecha, carnet, sede, material, costo, tipo))
+    for fecha, carnet, sede, centro_acopio, material, costo, tipo in datos:
+        transacciones_tree.insert("", tk.END, values=(fecha, carnet, sede, centro_acopio, material, costo, tipo))
 
         # Botón de Ver Detalles
     ver_detalles_button = tk.Button(transaccion_frame, text="Ver detalles", font=("Bahnschrift Condensed", 12),
@@ -77,41 +77,45 @@ def historial_transacciones(root):
             transaccion_seleccionada = transacciones_tree.focus()
             if transaccion_seleccionada:
                 valores = transacciones_tree.item(transaccion_seleccionada)['values']
-                fecha, carnet_estudiante, cantidad_material, centro_acopio, tec_colones, tipo = valores
+                fecha, carnet_estudiante , sede, centro_acopio, cantidad_material, tec_colones, tipo = valores
         except (IndexError, ValueError) as e:
             # Manejar errores de obtención de valores o datos faltantes
             print(f"Error al obtener los valores de la transacción: {e}")
             return
 
-            # Función para mostrar la ventana emergente con los detalles de la transacción
-            detalles_frame = tk.Toplevel(transaccion_frame)
-            detalles_frame.title("Detalles de la transacción")
-            detalles_frame.geometry("400x300")
+        # Función para mostrar la ventana emergente con los detalles de la transacción
+        detalles_frame = tk.Toplevel(transaccion_frame)
+        detalles_frame.title("Detalles de la transacción")
+        detalles_frame.geometry("400x300")
 
-            # Labels con los detalles
-            fecha_label = tk.Label(detalles_frame, text=f"Fecha: {fecha}", font=("Bahnschrift Condensed", 12))
-            fecha_label.place(x=20, y=20)
-            carnet_label = tk.Label(detalles_frame, text=f"Carnet del estudiante: {carnet_estudiante}",
-                                    font=("Bahnschrift Condensed", 12))
-            carnet_label.place(x=20, y=50)
-            cantidad_label = tk.Label(detalles_frame, text=f"Centro de acopio: {cantidad_material}",
-                                      font=("Bahnschrift Condensed", 12))
-            cantidad_label.place(x=20, y=80)
-            centro_label = tk.Label(detalles_frame, text=f"Material:Cantidad: {centro_acopio}",
-                                    font=("Bahnschrift Condensed", 12))
-            centro_label.place(x=20, y=110)
-            tec_colones_label = tk.Label(detalles_frame, text=f"TecColones: {tec_colones}",
-                                         font=("Bahnschrift Condensed", 12))
-            tec_colones_label.place(x=20, y=140)
-            tipo_label = tk.Label(detalles_frame, text=f"Tipo: {tipo}", font=("Bahnschrift Condensed", 12))
-            tipo_label.place(x=20, y=170)
+        # Labels con los detalles
+        fecha_label = tk.Label(detalles_frame, text=f"Fecha: {fecha}", font=("Bahnschrift Condensed", 12))
+        fecha_label.place(x=20, y=20)
+
+        carnet_label = tk.Label(detalles_frame, text=f"Carnet del estudiante: {carnet_estudiante}", font=("Bahnschrift Condensed", 12))
+        carnet_label.place(x=20, y=50)
+
+        sede_label = tk.Label(detalles_frame, text=f"Sede: {sede}", font=("Bahnschrift Condensed", 12))
+        sede_label.place(x=20, y=80)
+
+        centro_label = tk.Label(detalles_frame, text=f"Material:Centro de acopio: {centro_acopio}", font=("Bahnschrift Condensed", 12))
+        centro_label.place(x=20, y=110)
+
+        cantidad_label = tk.Label(detalles_frame, text=f"Cantidad: {cantidad_material}", font=("Bahnschrift Condensed", 12))
+        cantidad_label.place(x=20, y=140)
+
+        tec_colones_label = tk.Label(detalles_frame, text=f"TecColones: {tec_colones}", font=("Bahnschrift Condensed", 12))
+        tec_colones_label.place(x=20, y=170)
+
+        tipo_label = tk.Label(detalles_frame, text=f"Tipo: {tipo}", font=("Bahnschrift Condensed", 12))
+        tipo_label.place(x=20, y=200)
 
     def buscar_transacciones():
         try:
             fecha_inicio = fecha_inicio_entry.get_date()
             fecha_final = fecha_final_entry.get_date()
             centro_acopio_seleccionado = centro_acopio_combobox.get()
-
+            print(fecha_inicio, fecha_final, centro_acopio_seleccionado)
             # Verificar si las fechas o el centro de acopio están vacíos
             if not fecha_inicio or not fecha_final or not centro_acopio_seleccionado:
                 raise ValueError("Las fechas de inicio y fin, y el centro de acopio son obligatorios.")
@@ -132,7 +136,7 @@ def historial_transacciones(root):
                 # Manejar errores en el formato de fecha de la transacción
                 print(f"Error al convertir fecha de la transacción: {e}")
                 continue
-            trans_centro_acopio = transaccion[2]
+            trans_centro_acopio = transaccion[3]
             if fecha_inicio <= trans_fecha <= fecha_final and trans_centro_acopio == centro_acopio_seleccionado:
                 transacciones_tree.insert("", tk.END, values=transaccion)
 
