@@ -2,7 +2,7 @@ import datetime
 import secrets
 import hashlib
 from tkinter import messagebox
-from Utilidades import generador_identificador
+from Utilidades import generar_identificador_unico
 from manejador_archivos import guardar_material_base_datos, cargar_materiales_desde_base_datos
 
 '''
@@ -32,7 +32,7 @@ class CatalogoMaterialesReciclaje:
         
     
     def agregar_material(self, material):
-        identificador_unico = generador_identificador()
+        identificador_unico = generar_identificador_unico()
         material['Identificador'] = f"M-{identificador_unico}"
         self.materiales.append(material)
         self.identificadores_existentes.add(material['Identificador'])

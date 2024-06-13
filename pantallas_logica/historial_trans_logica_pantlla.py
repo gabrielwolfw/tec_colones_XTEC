@@ -33,8 +33,8 @@ def abrir_mostrar_detalles(transacciones_tree,transaccion_frame):
     transaccion_seleccionada = transacciones_tree.focus()
     if transaccion_seleccionada:
         valores = transacciones_tree.item(transaccion_seleccionada)['values']
-        fecha, carnet_estudiante, cantidad_material, centro_acopio, tec_colones, tipo = valores
-        mostrar_detalles(fecha, carnet_estudiante, cantidad_material, centro_acopio, tec_colones, tipo,transaccion_frame)
+        fecha, centro_acopio, cantidad_material, tipo, carnet_estudiante, tec_colones = valores
+        mostrar_detalles(fecha, centro_acopio, cantidad_material, tipo, carnet_estudiante, tec_colones,transaccion_frame)
 
 def close_window(root, transaccion_frame):
     # Mostrar nuevamente la ventana principal

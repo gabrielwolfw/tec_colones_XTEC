@@ -6,6 +6,7 @@ from tkcalendar import DateEntry
 from manejador_archivos.transacciones_manejador_archivos import leer_datos_de_transacciones
 import pantallas_logica.crear_transacciones_logica_pntlla as transaccion_logica
 from pantallas.mostrar_detalles_pantlla import mostrar_detalles
+from manejador_archivos import leer_datos_de_Estudiantes
 
 transacción_seleccionada = None
 
@@ -44,7 +45,7 @@ def historial_transacciones(root):
     buscar_button.place(x=745, y=15)
 
     # Tabla de transacciones
-    columnas = ("Fecha", "Carnet estudiante", "Centro de acopio", "Material:Cantidad", "TecColones", "Tipo")
+    columnas = ("Fecha", "Centro de acopio", "Material:Cantidad", "Tipo", "Carnet estudiante", "TecColones",)
     transacciones_tree = ttk.Treeview(transaccion_frame, columns=columnas, show="headings")
     transacciones_tree.place(x=20, y=60, width=760, height=280)
 
@@ -52,10 +53,16 @@ def historial_transacciones(root):
         transacciones_tree.heading(col, text=col)
         transacciones_tree.column(col, width=100)
 
-    datos = leer_datos_de_transacciones()
-    for fecha, carnet, sede, material, costo, tipo in datos:
-        transacciones_tree.insert("", tk.END, values=(fecha, carnet, sede, material, costo, tipo))
+    datos_t = leer_datos_de_transacciones()
+    datos_e = leer_datos_de_Estudiantes()
 
+    for fecha, sede, material, tipo, identificador_t in datos_t:
+        identificador_t_sin_prefijo = identificador_t[2:]  
+        for carnet, costo, identificador_e in datos_e:
+            identificador_e_sin_prefijo = identificador_e[2:] 
+            if identificador_t_sin_prefijo == identificador_e_sin_prefijo:
+                transacciones_tree.insert("", tk.END, values=(fecha, sede, material, tipo, carnet, costo))
+    
         # Botón de Ver Detalles
     ver_detalles_button = tk.Button(transaccion_frame, text="Ver detalles", font=("Bahnschrift Condensed", 12), bg="#A5C0DD",
                                     command=lambda: mostrar_transaccion_detalles())
@@ -77,8 +84,8 @@ def historial_transacciones(root):
         if transaccion_seleccionada:
             valores = transacciones_tree.item(transaccion_seleccionada)['values']
             if valores:
-                fecha, carnet_estudiante, cantidad_material, centro_acopio, tec_colones, tipo = valores
-                mostrar_detalles(fecha, carnet_estudiante, cantidad_material, centro_acopio, tec_colones, tipo, transaccion_frame)
+                fecha, centro_acopio, cantidad_material, tipo, carnet_estudiante, tec_colones = valores
+                mostrar_detalles(fecha, centro_acopio, cantidad_material, tipo, carnet_estudiante, tec_colones, transaccion_frame)
             else:
                 messagebox.showwarning("Advertencia", "No se ha seleccionado ninguna transacción.")
         else:
