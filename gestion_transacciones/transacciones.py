@@ -1,7 +1,8 @@
 import datetime
-from manejador_archivos import guardar_transaccion_base_datos,gur
+from manejador_archivos import guardar_transaccion_base_datos,guardar_Estudiantes_base_datos
 from catalogo_materiales import CatalogoMaterialesReciclaje
 from Utilidades import generador_identificador
+
 
 catalogo_materiales = CatalogoMaterialesReciclaje()
 
@@ -33,9 +34,8 @@ class Transacciones:
         identificador_unico_transaccion = generador_identificador()
         transaccion['Identificador'] = f"R-{identificador_unico_transaccion}"
         guardar_transaccion_base_datos(transaccion)
-        identificador_unico_estudiante = generador_identificador()
-        Estudiante['Identificador'] = f"T-{identificador_unico_estudiante}"
-        
+        Estudiante['Identificador'] = f"T-{identificador_unico_transaccion}"
+        guardar_Estudiantes_base_datos(Estudiante)
         self.materiales = {} # Limpiar los materiales después de guardar la transacción
 
 
