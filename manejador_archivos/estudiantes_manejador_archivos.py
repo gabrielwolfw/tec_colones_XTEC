@@ -1,14 +1,15 @@
 import os
 from tkinter import messagebox
+ESTUDIANTES_ARCHIVO = "./base_datos/Estudiantes.txt"
 
 def guardar_Estudiantes_base_datos(estudiante):
-    with open("./base_datos/Estudiantes.txt", "a") as file:
+    with open(ESTUDIANTES_ARCHIVO, "a") as file:
             linea = f"{estudiante['numero_carnet']}|{estudiante['TecColones']}|{estudiante['Identificador']}\n"
             file.write(linea)
     
 
 def leer_datos_de_Estudiantes():
-    with open("base_datos/Estudiantes.txt", "r") as archivo:
+    with open(ESTUDIANTES_ARCHIVO, "r") as archivo:
         datos = []
         for linea in archivo.readlines():
             transaccion = linea.strip().split("|")

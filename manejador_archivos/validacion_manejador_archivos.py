@@ -14,3 +14,6 @@ def validar_existencia_archivo_sedes():
 
 def validar_existencia_archivo_Estudiantes():
     return os.path.exists("./base_datos/Estudiantes.txt")
+
+def validar_existencia_archivo_transacciones_estado():
+    return os.path.exists("./base_datos/transacciones_estado.txt")
