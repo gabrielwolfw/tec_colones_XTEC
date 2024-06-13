@@ -16,25 +16,26 @@ centro_acopio = CentrosAcopio()
 
 def crear_transaccion(carnet_Entry, centro_combobox, materiales_ag, cantidad_Entry, total_tec_colones_Entry):
     if not validar_existencia_archivo_transacciones():
-        messagebox.showerror("Error", "El archivo transacciones.txt no existe. Por favor, comuníquese con el administrador del sistema.")
+        messagebox.showerror("Error", "El archivo transacciones.txt no existe, contacte al administrador.")
         return
     # Obtener los datos ingresados por el usuario
     numero_carnet = carnet_Entry.get()
     centro_acopio = centro_combobox.get()
     total_tec_colones = total_tec_colones_Entry.get()
+    print("CARNET: ", numero_carnet)
 
 
-    # Crear una instancia de la clase Transaccion
-    carnet_valido, status_code, mensaje_detalle = validar_carnet(numero_carnet)
+    # # Crear una instancia de la clase Transaccion
+    # carnet_valido, status_code, mensaje_detalle = validar_carnet(numero_carnet)
 
 
-    mensaje = f"{mensaje_detalle} (Código de estado: {status_code})"
-    if carnet_valido:
+    # mensaje = f"{mensaje_detalle} (Código de estado: {status_code})"
+    if True:
         transaccion.crear_transaccion(numero_carnet, centro_acopio, total_tec_colones)
-        messagebox.showinfo("Transacción realizada", mensaje)
+        messagebox.showinfo("Transacción realizada","La transacción se ha realizado con éxito.")
         limpiar_campos_transaccion(carnet_Entry, centro_combobox, cantidad_Entry, materiales_ag, total_tec_colones_Entry)
     else:
-        messagebox.showerror("Error", mensaje)
+        messagebox.showerror("Error")
 
 
 def agregar_material_transaccion(material_combobox, cantidad_Entry, materiales_ag,total_tec_colones_Entry):

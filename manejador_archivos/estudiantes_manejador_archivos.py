@@ -1,10 +1,10 @@
 import os
 from tkinter import messagebox
 
-def guardar_Estudiantes_base_datos(transaccion):
+def guardar_Estudiantes_base_datos(estudiante):
     with open("./base_datos/Estudiantes.txt", "a") as file:
-        linea = f"{transaccion['numero_carnet']}|{transaccion['TecColones']}|{transaccion['Identificador']}\n"
-        file.write(linea)
+            linea = f"{estudiante['numero_carnet']}|{estudiante['TecColones']}|{estudiante['Identificador']}\n"
+            file.write(linea)
     
 
 def leer_datos_de_Estudiantes():
