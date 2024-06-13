@@ -22,20 +22,19 @@ def crear_transaccion(carnet_Entry, centro_combobox, materiales_ag, cantidad_Ent
     numero_carnet = carnet_Entry.get()
     centro_acopio = centro_combobox.get()
     total_tec_colones = total_tec_colones_Entry.get()
-    print("CARNET: ", numero_carnet)
 
 
-    # # Crear una instancia de la clase Transaccion
-    # carnet_valido, status_code, mensaje_detalle = validar_carnet(numero_carnet)
+    
+    carnet_valido, status_code, mensaje_detalle = validar_carnet(numero_carnet)
 
 
-    # mensaje = f"{mensaje_detalle} (Código de estado: {status_code})"
-    if True:
+    mensaje = f"{mensaje_detalle} (Código de estado: {status_code})"
+    if validar_carnet(numero_carnet)[0]:
         transaccion.crear_transaccion(numero_carnet, centro_acopio, total_tec_colones)
-        messagebox.showinfo("Transacción realizada","La transacción se ha realizado con éxito.")
+        messagebox.showinfo("Transacción realizada",mensaje)
         limpiar_campos_transaccion(carnet_Entry, centro_combobox, cantidad_Entry, materiales_ag, total_tec_colones_Entry)
     else:
-        messagebox.showerror("Error")
+        messagebox.showerror("Error",mensaje)
 
 
 def agregar_material_transaccion(material_combobox, cantidad_Entry, materiales_ag,total_tec_colones_Entry):
