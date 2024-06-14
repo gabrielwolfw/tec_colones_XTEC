@@ -1,28 +1,40 @@
 import tkinter as tk
 from tkinter import messagebox
+import os
 
 from administacion_sedes import CentrosAcopio
 from catalogo_materiales import CatalogoMaterialesReciclaje
-from pantallas_logica.Verifica_Carnet import verifica_usuario_exise
+from API import validar_carnet
 from gestion_transacciones import Transacciones
 from manejador_archivos import cargar_centros_acopio_desde_archivo
+from manejador_archivos import validar_existencia_archivo_transacciones
 
 
 transaccion = Transacciones()
 catalogo_materiales = CatalogoMaterialesReciclaje()
 centro_acopio = CentrosAcopio()
 
-def crear_transaccion(carnet_Entry,centro_combobox,total_tec_colones_Entry):
+def crear_transaccion(carnet_Entry, centro_combobox, materiales_ag, cantidad_Entry, total_tec_colones_Entry):
+    if not validar_existencia_archivo_transacciones():
+        messagebox.showerror("Error", "El archivo transacciones.txt no existe, contacte al administrador.")
+        return
     # Obtener los datos ingresados por el usuario
     numero_carnet = carnet_Entry.get()
     centro_acopio = centro_combobox.get()
     total_tec_colones = total_tec_colones_Entry.get()
 
-    # Crear una instancia de la clase Transaccion
-    if verifica_usuario_exise(numero_carnet):
-        transaccion.crear_transaccion(numero_carnet,centro_acopio,total_tec_colones)
+
+    
+    carnet_valido, status_code, mensaje_detalle = validar_carnet(numero_carnet)
+
+
+    mensaje = f"{mensaje_detalle} (Código de estado: {status_code})"
+    if validar_carnet(numero_carnet)[0]:
+        transaccion.crear_transaccion(numero_carnet, centro_acopio, total_tec_colones)
+        messagebox.showinfo("Transacción realizada",mensaje)
+        limpiar_campos_transaccion(carnet_Entry, centro_combobox, cantidad_Entry, materiales_ag, total_tec_colones_Entry)
     else:
-        messagebox.showerror("Error","El usuario no se encuentra en Cuenta Tec")
+        messagebox.showerror("Error",mensaje)
 
 
 def agregar_material_transaccion(material_combobox, cantidad_Entry, materiales_ag,total_tec_colones_Entry):
@@ -72,26 +84,24 @@ def obtener_centros_acopio_combobox():
 
 
 def continuar_click(carnet_Entry, centro_combobox, total_tec_colones_Entry, cantidad_Entry, materiales_ag):
+
+
+    
     # Verificar la validez de los datos de ingreso antes de proceder
-    if not validar_ingreso_datos_crear_transaccion(carnet_Entry, centro_combobox,materiales_ag):
+    if not validar_ingreso_datos_crear_transaccion(centro_combobox,materiales_ag):
         return
+    
 
     respuesta = messagebox.askyesno("Confirmar transacción", "¿Está seguro de que desea realizar la transacción?")
     
     if respuesta:
         # Si el usuario hizo clic en "Sí", crear la transacción
-        crear_transaccion(carnet_Entry, centro_combobox, total_tec_colones_Entry)
-        messagebox.showinfo("Transacción realizada", "La transacción se ha realizado con éxito.")
-        limpiar_campos_transaccion(carnet_Entry, centro_combobox, cantidad_Entry, materiales_ag, total_tec_colones_Entry)
+        crear_transaccion(carnet_Entry, centro_combobox,materiales_ag,cantidad_Entry, total_tec_colones_Entry)
     else:
         # Si el usuario hizo clic en "No" o cerró el cuadro de diálogo, no hacer nada
         pass
 
-def validar_ingreso_datos_crear_transaccion(carnet_Entry, centro_combobox,materiales_ag):
-    carnet = carnet_Entry.get()
-    if len(carnet) != 10 or not carnet.isdigit():
-        messagebox.showerror("Error", "El número de carné debe tener exactamente 10 dígitos.")
-        return False
+def validar_ingreso_datos_crear_transaccion(centro_combobox,materiales_ag):
     if centro_combobox.get() == "":
         messagebox.showerror("Error", "Debe seleccionar un centro de acopio.")
         return False
@@ -115,8 +125,9 @@ def validar_ingreso_datos_agregar_material(material_combobox, cantidad_Entry):
 def limpiar_campos_transaccion(carnet_Entry, centro_combobox, cantidad_Entry, materiales_ag, total_tec_colones_Entry):
     carnet_Entry.delete(0, tk.END)
     centro_combobox.set("")
-    cantidad_Entry.delete(0, tk.END)
-    materiales_ag.delete(*materiales_ag.get_children())
+    cantidad_Entry.delete(0, tk.END)  # Limpiar el widget cantidad_Entry solo si hay algo para eliminar
+    if materiales_ag.get_children():  # Verificar si hay elementos para eliminar en el Treeview
+        materiales_ag.delete(*materiales_ag.get_children())  # Eliminar los elementos del Treeview
     total_tec_colones_Entry.config(state=tk.NORMAL)
     total_tec_colones_Entry.delete(0, tk.END)
     total_tec_colones_Entry.insert(0, "0.00")
