@@ -7,3 +7,4 @@ from .historial_trans_logica_pantlla import ingresa_datos_transacciones,buscar_t
 
 from .historial_trans_logica_pantlla import ingresa_datos_transacciones,buscar_transacciones,mostrar_transaccion_detalles,close_window
 from .mostrar_detalles_logica_pntlla import anular_transaccion
+from .crear_transacciones_logica_pntlla import continuar_click, crear_transaccion

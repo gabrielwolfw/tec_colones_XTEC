@@ -22,19 +22,18 @@ def crear_transaccion(carnet_Entry, centro_combobox, materiales_ag, cantidad_Ent
     numero_carnet = carnet_Entry.get()
     centro_acopio = centro_combobox.get()
     total_tec_colones = total_tec_colones_Entry.get()
-
-
-    
+    sede = CentrosAcopio.buscar_sede_por_identificador(centro_combobox.get())
+    print(sede)
     carnet_valido, status_code, mensaje_detalle = validar_carnet(numero_carnet)
 
 
     mensaje = f"{mensaje_detalle} (Código de estado: {status_code})"
     if validar_carnet(numero_carnet)[0]:
-        transaccion.crear_transaccion(numero_carnet, centro_acopio, total_tec_colones)
-        messagebox.showinfo("Transacción realizada",mensaje)
+        transaccion.crear_transaccion(numero_carnet, sede, centro_acopio, total_tec_colones)
+        messagebox.showinfo("Transacción realizada", mensaje)
         limpiar_campos_transaccion(carnet_Entry, centro_combobox, cantidad_Entry, materiales_ag, total_tec_colones_Entry)
     else:
-        messagebox.showerror("Error",mensaje)
+        messagebox.showerror("Error", mensaje)
 
 
 def agregar_material_transaccion(material_combobox, cantidad_Entry, materiales_ag,total_tec_colones_Entry):
@@ -85,18 +84,16 @@ def obtener_centros_acopio_combobox():
 
 def continuar_click(carnet_Entry, centro_combobox, total_tec_colones_Entry, cantidad_Entry, materiales_ag):
 
-
-    
     # Verificar la validez de los datos de ingreso antes de proceder
-    if not validar_ingreso_datos_crear_transaccion(centro_combobox,materiales_ag):
+    if not validar_ingreso_datos_crear_transaccion(centro_combobox, materiales_ag):
         return
-    
+
 
     respuesta = messagebox.askyesno("Confirmar transacción", "¿Está seguro de que desea realizar la transacción?")
     
     if respuesta:
         # Si el usuario hizo clic en "Sí", crear la transacción
-        crear_transaccion(carnet_Entry, centro_combobox,materiales_ag,cantidad_Entry, total_tec_colones_Entry)
+        crear_transaccion(carnet_Entry, centro_combobox, materiales_ag, cantidad_Entry, total_tec_colones_Entry)
     else:
         # Si el usuario hizo clic en "No" o cerró el cuadro de diálogo, no hacer nada
         pass

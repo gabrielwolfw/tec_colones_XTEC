@@ -1,6 +1,6 @@
 
 import tkinter as tk
-from tkinter import messagebox,ttk
+from tkinter import messagebox, ttk
 from pantallas.mostrar_detalles_pantlla import mostrar_detalles
 import datetime
 
@@ -11,12 +11,12 @@ def ingresa_datos_transacciones(transacciones_tree, columnas, datos_t, datos_e):
         transacciones_tree.heading(col, text=col)
         transacciones_tree.column(col, width=100)
 
-    for fecha, sede, material, tipo, identificador_t in datos_t:
+    for fecha, sede, centro_acopio, material, tipo, identificador_t in datos_t:
         identificador_t_sin_prefijo = identificador_t[2:]  # Suponiendo que identificador_t tiene un prefijo
         for carnet, costo, identificador_e in datos_e:
             identificador_e_sin_prefijo = identificador_e[2:]  # Suponiendo que identificador_e tiene un prefijo
             if identificador_t_sin_prefijo == identificador_e_sin_prefijo:
-                transacciones_tree.insert("", tk.END, values=(fecha, sede, material, tipo, carnet, costo))
+                transacciones_tree.insert("", tk.END, values=(fecha, sede, centro_acopio, material, tipo, carnet, costo))
 
 def buscar_transacciones(fecha_final_entry, fecha_inicio_entry, centro_acopio_combobox, transacciones_tree, datos_e, datos_t):
     try:
@@ -39,21 +39,21 @@ def buscar_transacciones(fecha_final_entry, fecha_inicio_entry, centro_acopio_co
 
         # Filtrar transacciones por fecha y centro de acopio
         filtered_transactions = []
-        for fecha, sede, material, tipo, identificador_t in datos_t:
+        for fecha, sede, centro_acopio, material, tipo, identificador_t in datos_t:
             try:
                 trans_fecha = datetime.datetime.strptime(fecha, "%m/%d/%Y").date()
             except ValueError as e:
                 # Manejar errores en el formato de fecha de la transacción
                 print(f"Error al convertir fecha de la transacción: {e}")
                 continue
-            trans_centro_acopio = sede
+            trans_centro_acopio = centro_acopio
             if fecha_inicio <= trans_fecha <= fecha_final and trans_centro_acopio == centro_acopio_seleccionado:
                 # Buscar los datos del estudiante correspondiente
                 for carnet, costo, identificador_e in datos_e:
-                    identificador_t_sin_prefijo = identificador_t[2:]  # Suponiendo que identificador_t tiene un prefijo
-                    identificador_e_sin_prefijo = identificador_e[2:]  # Suponiendo que identificador_e tiene un prefijo
+                    identificador_t_sin_prefijo = identificador_t[3:]  # Suponiendo que identificador_t tiene un prefijo
+                    identificador_e_sin_prefijo = identificador_e[3:]  # Suponiendo que identificador_e tiene un prefijo
                     if identificador_t_sin_prefijo == identificador_e_sin_prefijo:
-                        filtered_transactions.append((fecha, sede, material, tipo, carnet, costo))
+                        filtered_transactions.append((fecha, sede,centro_acopio, material, tipo, carnet, costo))
                         break  # Salir del bucle una vez encontrado el estudiante
 
         # Verificar si no se encontraron transacciones
@@ -74,25 +74,23 @@ def mostrar_transaccion_detalles(transaccion_frame, transacciones_tree, datos_t,
     if transaccion_seleccionada:
         valores = transacciones_tree.item(transaccion_seleccionada)['values']
         if valores:
-            fecha, centro_acopio, cantidad_material, tipo, carnet_estudiante, tec_colones = valores
+            fecha, sede, centro_acopio, cantidad_material, tipo, carnet_estudiante, tec_colones = valores
             
             # Obtener identificador_t correspondiente a la transacción seleccionada
             identificador_t = None
-            for fecha_t, sede, material_t, tipo_t, identificador_t in datos_t:
-                if (fecha_t, sede, material_t, tipo_t) == (fecha, centro_acopio, cantidad_material, tipo):
+            for fecha_t, sede, centro_acopio,  material_t, tipo_t, identificador_t in datos_t:
+                if (fecha_t, sede, centro_acopio, material_t, tipo_t) == (fecha, sede, centro_acopio, cantidad_material, tipo):
                     break
             
             if identificador_t:
-                mostrar_detalles(fecha, centro_acopio, cantidad_material, tipo, carnet_estudiante, tec_colones, transaccion_frame, identificador_t)
+                mostrar_detalles(fecha, sede, centro_acopio, cantidad_material, tipo, carnet_estudiante, tec_colones, transaccion_frame, identificador_t)
             else:
                 messagebox.showwarning("Advertencia", "No se encontró el identificador de la transacción seleccionada.")
         else:
             messagebox.showwarning("Advertencia", "No se ha seleccionado ninguna transacción.")
     else:
         messagebox.showwarning("Advertencia", "No se ha seleccionado ninguna transacción.")
-
 def close_window(root, transaccion_frame):
     # Mostrar nuevamente la ventana principal
     root.deiconify()
     transaccion_frame.destroy()
-

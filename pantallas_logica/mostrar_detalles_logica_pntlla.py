@@ -6,7 +6,7 @@ from manejador_archivos import guardar_transacciones_estado,verificar_transaccio
 transaccion = Transacciones()
 
 
-def anular_transaccion(fecha, carnet_estudiante, centro_acopio, tec_colones, cantidad_material, tipo, identificador_t):
+def anular_transaccion(fecha, carnet_estudiante, sede, centro_acopio, cantidad_material, tec_colones, tipo, identificador_t):
     if tipo == "Aprobada":
         if verificar_transaccion_anulada(identificador_t):
             messagebox.showwarning("Advertencia", "La transacción ya ha sido anulada anteriormente.")
@@ -14,7 +14,7 @@ def anular_transaccion(fecha, carnet_estudiante, centro_acopio, tec_colones, can
             tec_colones = float(tec_colones)
             tec_colones = -tec_colones
             tec_colones = str(tec_colones)
-            transaccion.anular_transaccion(carnet_estudiante,centro_acopio,tec_colones,cantidad_material)
+            transaccion.anular_transaccion(carnet_estudiante, sede, centro_acopio, cantidad_material, tec_colones)
             guardar_transacciones_estado(identificador_t)
             messagebox.showinfo("Información", "Transacción anulada con éxito.")
     else:

@@ -17,11 +17,13 @@ class Transacciones:
         else:
             self.materiales[material_reciclado] = cantidad_material
     
-    def crear_transaccion(self,numero_carnet,centro_acopio,total_tec_colones_Entry):
+    def crear_transaccion(self, numero_carnet, sede, centro_acopio,total_tec_colones_Entry):
         tipo = "Aprobada"
+        print(sede)
         fecha = datetime.datetime.now().strftime("%m/%d/%Y")
         transaccion = {
             "Fecha": fecha,
+            "Sede": sede,
             "centro_acopio": centro_acopio,
             "materiales": self.materiales,
             "Tipo": tipo
@@ -31,6 +33,7 @@ class Transacciones:
             "TecColones": total_tec_colones_Entry,
         }
         self.historial.append(transaccion)
+        print(transaccion)
         identificador_unico_transaccion = generar_identificador_unico()
         transaccion['Identificador'] = f"R-{identificador_unico_transaccion}"
         guardar_transaccion_base_datos(transaccion)
@@ -38,11 +41,12 @@ class Transacciones:
         guardar_Estudiantes_base_datos(estudiante)
         self.materiales = {}  # Limpiar los materiales después de guardar la transacción
 
-    def anular_transaccion(self,numero_carnet,centro_acopio,total_tec_colones_Entry,cantidad_material):
+    def anular_transaccion(self, numero_carnet, sede, centro_acopio, cantidad_material, total_tec_colones_Entry):
         tipo = "Anulada"
         fecha = datetime.datetime.now().strftime("%m/%d/%Y")
         transaccion = {
             "Fecha": fecha,
+            "Sede": sede,
             "centro_acopio": centro_acopio,
             "materiales": cantidad_material,
             "Tipo": tipo

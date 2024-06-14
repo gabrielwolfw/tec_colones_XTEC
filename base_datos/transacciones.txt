@@ -1,5 +1,3 @@
-06/12/2024|CT/USA|Carton:2|Aprobada|R-86d51b2743a1
-06/12/2024|CT/USA|Carton:2|Aprobada|R-794c375476d1
-06/12/2024|CT/USA|Carton:50|Aprobada|R-98c7886e2530
-06/13/2024|CT/USA|Carton:2|Aprobada|R-4c601e53c06b
-06/13/2024|CT/USA|Carton:50|Anulada|R-09a22b4a1666
+06/13/2024|TecUSA|CT/USA|Carton:32|Aprobada|R-7c21088b39a3
+06/13/2024|TecHeredia|CT/HER|Papel:12|Aprobada|R-d92aa23292dc
+06/13/2024|TecHeredia|CT/HER|Papel:12|Anulada|R-6ce0f2a28c79

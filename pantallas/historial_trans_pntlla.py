@@ -52,7 +52,7 @@ def historial_transacciones(root):
     buscar_button.place(x=745, y=15)
 
     # Tabla de transacciones
-    columnas = ("Fecha", "Centro de acopio", "Material:Cantidad", "Tipo", "Carnet estudiante", "TecColones",)
+    columnas = ("Fecha", "Sede", "Centro de acopio", "Material:Cantidad", "Tipo", "Carnet estudiante", "TecColones",)
     transacciones_tree = ttk.Treeview(transaccion_frame, columns=columnas, show="headings")
     transacciones_tree.place(x=20, y=60, width=760, height=280)
     
