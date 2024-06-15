@@ -19,7 +19,7 @@ def autenticacion_pantalla(root):
         # Cerrar la aplicación
         root.quit()
 
-    auth_frame.protocol("WM_DELETE_WINDOW", close_window)
+    auth_frame.protocol("WM_DELETE_WINDOW", lambda: close_window(root))
 
     # Configurar el estilo
     style = ttk.Style()
