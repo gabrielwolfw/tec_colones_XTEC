@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 
 import pantallas_logica.centrosacopio_logica_pntlla as centrosacopio_logica_pntlla
 
@@ -32,6 +33,10 @@ def centrosacopio_panatlla(root):
                                                                                                                                                                    numerocontacto_Entry,
                                                                                                                                                                    identificador_Entry), font=("Bahnschrift Condensed", 14))
     crear_centro_acopio_button.place(x=100, y=170)
+    
+    # Botón de Salir
+    salir_button = tk.Button(centrosacopio_frame, text="Salir",font=("Bahnschrift Condensed", 12), bg="#A5C0DD", command=lambda: close_window())
+    salir_button.place(x=350, y=260)
 
     def close_window():
         # Mostrar nuevamente la ventana principal

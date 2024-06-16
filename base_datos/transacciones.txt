@@ -1,3 +1,6 @@
 06/13/2024|TecUSA|CT/USA|Carton:32|Aprobada|R-7c21088b39a3
 06/13/2024|TecHeredia|CT/HER|Papel:12|Aprobada|R-d92aa23292dc
 06/13/2024|TecHeredia|CT/HER|Papel:12|Anulada|R-6ce0f2a28c79
+06/16/2024|TecHeredia|CT/HER|Metal:23, Plastico:34, Madera:33|Aprobada|R-37d9a88d90dc
+06/16/2024|TecHeredia|CT/HER|Metal:23, Plastico:34, Madera:33|Anulada|R-b3ad2fa45c89
+06/16/2024|TecHeredia|CT/HER|Metal:111, Papel:23, Madera:22|Aprobada|R-ab899c1f4885

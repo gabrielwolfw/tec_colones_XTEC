@@ -10,11 +10,7 @@ from manejador_archivos import leer_datos_de_Estudiantes
 
 from pantallas_logica import buscar_transacciones, mostrar_transaccion_detalles, close_window,ingresa_datos_transacciones
 
-
-
-
-
-def historial_transacciones(root):
+def historial_transacciones(root, mostrar_detalles=True,mostrar_centro_acopio=True):
     # Ocultar la ventana principal
     transaccion_seleccionada = None
     root.withdraw()
@@ -36,13 +32,15 @@ def historial_transacciones(root):
     fecha_final_entry = DateEntry(transaccion_frame, width=12, background='darkblue', foreground='white', borderwidth=2)
     fecha_final_entry.place(x=340, y=20)
 
-    valores_centros_acopio = transaccion_logica.obtener_centros_acopio_combobox()
-    centro_acopio_label = tk.Label(transaccion_frame, text="Centro de acopio", font=("Bahnschrift Condensed", 12))
-    centro_acopio_label.place(x=470, y=20)
-    centro_acopio_combobox = ttk.Combobox(transaccion_frame, values=valores_centros_acopio,
-                                          font=("Bahnschrift Condensed", 12))
-    centro_acopio_combobox.place(x=570, y=20)
-    centro_acopio_combobox.current(0)
+    if mostrar_centro_acopio:
+        valores_centros_acopio = transaccion_logica.obtener_centros_acopio_combobox()
+        centro_acopio_label = tk.Label(transaccion_frame, text="Centro de acopio", font=("Bahnschrift Condensed", 12))
+        centro_acopio_label.place(x=470, y=20)
+        centro_acopio_combobox = ttk.Combobox(transaccion_frame, values=valores_centros_acopio, font=("Bahnschrift Condensed", 12))
+        centro_acopio_combobox.place(x=570, y=20)
+        centro_acopio_combobox.current(0)
+    else:
+        centro_acopio_combobox = None
 
     datos_t = leer_datos_de_transacciones()
     datos_e = leer_datos_de_Estudiantes()
@@ -57,11 +55,12 @@ def historial_transacciones(root):
     transacciones_tree.place(x=20, y=60, width=760, height=280)
     
     ingresa_datos_transacciones(transacciones_tree,columnas,datos_t,datos_e)
-
-        # Botón de Ver Detalles
-    ver_detalles_button = tk.Button(transaccion_frame, text="Ver detalles", font=("Bahnschrift Condensed", 12), bg="#A5C0DD",
+    
+     # Botón de Ver Detalles
+    if mostrar_detalles:
+        ver_detalles_button = tk.Button(transaccion_frame, text="Ver detalles", font=("Bahnschrift Condensed", 12), bg="#A5C0DD",
                                     command=lambda: mostrar_transaccion_detalles(transaccion_frame, transacciones_tree, datos_t, datos_e, transaccion_seleccionada))
-    ver_detalles_button.place(x=695, y=350)
+        ver_detalles_button.place(x=695, y=350)
 
     # Botón de Salir
     salir_button = tk.Button(transaccion_frame, text="Salir", font=("Bahnschrift Condensed", 12), bg="#A5C0DD",

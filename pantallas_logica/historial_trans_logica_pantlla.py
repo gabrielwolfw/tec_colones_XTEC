@@ -22,11 +22,15 @@ def buscar_transacciones(fecha_final_entry, fecha_inicio_entry, centro_acopio_co
     try:
         fecha_inicio = fecha_inicio_entry.get_date()
         fecha_final = fecha_final_entry.get_date()
-        centro_acopio_seleccionado = centro_acopio_combobox.get()
+        
+        if centro_acopio_combobox is not None:
+            centro_acopio_seleccionado = centro_acopio_combobox.get()
+        else:
+            centro_acopio_seleccionado = None
 
-        # Verificar si las fechas o el centro de acopio están vacíos
-        if not fecha_inicio or not fecha_final or not centro_acopio_seleccionado:
-            raise ValueError("Las fechas de inicio y fin, y el centro de acopio son obligatorios.")
+        # Verificar si las fechas están vacías
+        if not fecha_inicio or not fecha_final:
+            raise ValueError("Las fechas de inicio y fin son obligatorias.")
         
         # Verificar que la fecha final sea mayor o igual a la fecha inicial
         if fecha_inicio > fecha_final:
@@ -37,7 +41,7 @@ def buscar_transacciones(fecha_final_entry, fecha_inicio_entry, centro_acopio_co
         for item in transacciones_tree.get_children():
             transacciones_tree.delete(item)
 
-        # Filtrar transacciones por fecha y centro de acopio
+        # Filtrar transacciones por fecha y centro de acopio (si corresponde)
         filtered_transactions = []
         for fecha, sede, centro_acopio, material, tipo, identificador_t in datos_t:
             try:
@@ -46,15 +50,25 @@ def buscar_transacciones(fecha_final_entry, fecha_inicio_entry, centro_acopio_co
                 # Manejar errores en el formato de fecha de la transacción
                 print(f"Error al convertir fecha de la transacción: {e}")
                 continue
-            trans_centro_acopio = centro_acopio
-            if fecha_inicio <= trans_fecha <= fecha_final and trans_centro_acopio == centro_acopio_seleccionado:
-                # Buscar los datos del estudiante correspondiente
-                for carnet, costo, identificador_e in datos_e:
-                    identificador_t_sin_prefijo = identificador_t[3:]  # Suponiendo que identificador_t tiene un prefijo
-                    identificador_e_sin_prefijo = identificador_e[3:]  # Suponiendo que identificador_e tiene un prefijo
-                    if identificador_t_sin_prefijo == identificador_e_sin_prefijo:
-                        filtered_transactions.append((fecha, sede,centro_acopio, material, tipo, carnet, costo))
-                        break  # Salir del bucle una vez encontrado el estudiante
+            
+            if centro_acopio_seleccionado:
+                if fecha_inicio <= trans_fecha <= fecha_final and centro_acopio == centro_acopio_seleccionado:
+                    # Buscar los datos del estudiante correspondiente
+                    for carnet, costo, identificador_e in datos_e:
+                        identificador_t_sin_prefijo = identificador_t[3:]  # Suponiendo que identificador_t tiene un prefijo
+                        identificador_e_sin_prefijo = identificador_e[3:]  # Suponiendo que identificador_e tiene un prefijo
+                        if identificador_t_sin_prefijo == identificador_e_sin_prefijo:
+                            filtered_transactions.append((fecha, sede, centro_acopio, material, tipo, carnet, costo))
+                            break  # Salir del bucle una vez encontrado el estudiante
+            else:
+                if fecha_inicio <= trans_fecha <= fecha_final:
+                    # Buscar los datos del estudiante correspondiente
+                    for carnet, costo, identificador_e in datos_e:
+                        identificador_t_sin_prefijo = identificador_t[3:]  # Suponiendo que identificador_t tiene un prefijo
+                        identificador_e_sin_prefijo = identificador_e[3:]  # Suponiendo que identificador_e tiene un prefijo
+                        if identificador_t_sin_prefijo == identificador_e_sin_prefijo:
+                            filtered_transactions.append((fecha, sede, centro_acopio, material, tipo, carnet, costo))
+                            break  # Salir del bucle una vez encontrado el estudiante
 
         # Verificar si no se encontraron transacciones
         if not filtered_transactions:
@@ -67,6 +81,7 @@ def buscar_transacciones(fecha_final_entry, fecha_inicio_entry, centro_acopio_co
         # Manejar errores de conversión de fecha, entrada inválida, fechas vacías o centro de acopio vacío
         messagebox.showerror("Error", f"Error al obtener las fechas o el centro de acopio: {e}")
         return
+
 
 def mostrar_transaccion_detalles(transaccion_frame, transacciones_tree, datos_t, datos_e, transaccion_seleccionada):
     # Obtener la transacción seleccionada
