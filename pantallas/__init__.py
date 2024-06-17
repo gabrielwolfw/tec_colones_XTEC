@@ -4,3 +4,5 @@ from .catalogo_materiales_pntlla import catalogo_materiales_pantalla
 from .crear_transaccion_pntlla import crear_transaccion_pntlla
 from .historial_trans_pntlla import historial_transacciones
 from .mostrar_detalles_pantlla import mostrar_detalles
+from .autenticacion_pntlla import autenticacion_pantalla 
+from .pantalla_menu import mostrar_pantalla_encargado, mostrar_pantalla_admin, mostrar_pantalla_estudiante
