@@ -15,6 +15,8 @@ def iniciar_sesion(correo_entry, contrasena_entry, auth_frame, root):
     elif correo == "estudiante@tec.ac.cr" and contrasena == "56789abcd":
         auth_frame.destroy()
         mostrar_pantalla_estudiante(root)
+    elif correo == "" or contrasena == "":
+        messagebox.showerror("Error", "Por favor, ingrese sus credenciales")
     else:
         messagebox.showerror("Error", "Credenciales incorrectas")
 
