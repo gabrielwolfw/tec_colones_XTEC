@@ -3,10 +3,13 @@ from tkinter import messagebox
 import tkinter as tk
 from administacion_sedes import CentrosAcopio
 from administacion_sedes import Sedes
-
+from manejador_archivos import validar_existencia_archivo_centros_acopio
 centro_acopio = CentrosAcopio()
 
 def crear_centro_acopio(sede_entry, numero_contacto_entry, identificador_entry):
+    if not validar_existencia_archivo_centros_acopio():
+        messagebox.showerror("Error", "No se ha encontrado el archivo de centros de acopio, por favor contacte al administrador.")
+        return
     sede = sede_entry.get()
     numero_contacto = numero_contacto_entry.get()
     identificador = identificador_entry.get()

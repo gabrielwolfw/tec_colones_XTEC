@@ -2,10 +2,13 @@ from tkinter import messagebox
 import tkinter as tk
 
 from administacion_sedes import Sedes
-
+from manejador_archivos import validar_existencia_archivo_sedes
 sedes = Sedes()
 
-def crear_sede(nombre_entry, ubicacion_entry, numero_contacto_entry, estado_var):          
+def crear_sede(nombre_entry, ubicacion_entry, numero_contacto_entry, estado_var):
+    if not validar_existencia_archivo_sedes():
+        messagebox.showerror("Error", "No se ha encontrado el archivo de sedes, por favor contacte al administrador.")
+        return          
     nombre = nombre_entry.get()
     ubicacion = ubicacion_entry.get()
     numero_contacto = numero_contacto_entry.get()

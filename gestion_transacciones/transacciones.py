@@ -1,7 +1,9 @@
 import datetime
-
-from manejador_archivos import guardar_transaccion_base_datos
+from manejador_archivos import guardar_transaccion_base_datos,guardar_Estudiantes_base_datos,guardar_transaccion_anulada_base_datos
 from catalogo_materiales import CatalogoMaterialesReciclaje
+from Utilidades import generar_identificador_unico
+
+
 catalogo_materiales = CatalogoMaterialesReciclaje()
 
 class Transacciones:
@@ -15,20 +17,54 @@ class Transacciones:
         else:
             self.materiales[material_reciclado] = cantidad_material
     
-    def crear_transaccion(self,numero_carnet,centro_acopio,total_tec_colones_Entry):
+    def crear_transaccion(self, numero_carnet, sede, centro_acopio,total_tec_colones_Entry):
         tipo = "Aprobada"
+        print(sede)
         fecha = datetime.datetime.now().strftime("%m/%d/%Y")
         transaccion = {
             "Fecha": fecha,
-            "numero_carnet": numero_carnet,
+            "Sede": sede,
             "centro_acopio": centro_acopio,
             "materiales": self.materiales,
-            "TecColones": total_tec_colones_Entry,
             "Tipo": tipo
         }
+        estudiante = {
+            "numero_carnet": numero_carnet,
+            "TecColones": total_tec_colones_Entry,
+        }
         self.historial.append(transaccion)
+        print(transaccion)
+        identificador_unico_transaccion = generar_identificador_unico()
+        transaccion['Identificador'] = f"R-{identificador_unico_transaccion}"
         guardar_transaccion_base_datos(transaccion)
-        self.materiales = {} # Limpiar los materiales después de guardar la transacción
+        estudiante['Identificador'] = f"T-{identificador_unico_transaccion}"
+        guardar_Estudiantes_base_datos(estudiante)
+        self.materiales = {}  # Limpiar los materiales después de guardar la transacción
+
+    def anular_transaccion(self, numero_carnet, sede, centro_acopio, cantidad_material, total_tec_colones_Entry):
+        tipo = "Anulada"
+        fecha = datetime.datetime.now().strftime("%m/%d/%Y")
+        transaccion = {
+            "Fecha": fecha,
+            "Sede": sede,
+            "centro_acopio": centro_acopio,
+            "materiales": cantidad_material,
+            "Tipo": tipo
+        }
+        estudiante = {
+            "numero_carnet": numero_carnet,
+            "TecColones": total_tec_colones_Entry,
+        }
+        self.historial.append(transaccion)
+        identificador_unico_transaccion = generar_identificador_unico()
+        transaccion['Identificador'] = f"R-{identificador_unico_transaccion}"
+        guardar_transaccion_anulada_base_datos(transaccion)
+        estudiante['Identificador'] = f"T-{identificador_unico_transaccion}"
+        guardar_Estudiantes_base_datos(estudiante)
+        self.materiales = {}  # Limpiar los materiales después de guardar la transacción
+        
+
+
 
 
 
