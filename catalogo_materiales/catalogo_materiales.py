@@ -2,7 +2,7 @@ import datetime
 import secrets
 import hashlib
 from tkinter import messagebox
-
+from Utilidades import generar_identificador_unico
 from manejador_archivos import guardar_material_base_datos, cargar_materiales_desde_base_datos
 
 '''
@@ -32,7 +32,8 @@ class CatalogoMaterialesReciclaje:
         
     
     def agregar_material(self, material):
-        material['Identificador'] = self.generar_identificador_unico()
+        identificador_unico = generar_identificador_unico()
+        material['Identificador'] = f"M-{identificador_unico}"
         self.materiales.append(material)
         self.identificadores_existentes.add(material['Identificador'])
 
@@ -44,17 +45,6 @@ class CatalogoMaterialesReciclaje:
         for material in self.materiales:
             print(material)
 
-    '''
-    Método para generar un identificador único para un material
-    '''
-    def generar_identificador_unico(self):
-        while True:
-            token = secrets.token_hex(6)
-            hash_object = hashlib.sha256(token.encode())
-            hash_token = hash_object.hexdigest()[:12]
-            key_id = f"M-{hash_token}"
-            if key_id not in self.identificadores_existentes:
-                return key_id
     
     '''
     Obtiene una lista de materiales unicamente con el nombre y valor unitario

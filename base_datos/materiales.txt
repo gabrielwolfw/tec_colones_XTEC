@@ -8,3 +8,7 @@ M-afcc4e748a34|Plastico|kilogramo|5|Activo|2024-05-27 02:24:04|
 
 M-bc7f97ac65ac|Madera|kilogramo|10|Activo|2024-05-27|
 
+
+
+
+

@@ -3,10 +3,14 @@ import tkinter as tk
 
 
 from catalogo_materiales.catalogo_materiales import CatalogoMaterialesReciclaje
+from manejador_archivos import validar_existencia_archivo_materiales
 #Instanacia reutilizable del catalogo de materiales
 catalogo_materiales = CatalogoMaterialesReciclaje()
 
 def crear_material(nombre_entry, unidad_combobox, valor_entry, descripcion_text, lista_text):
+    if not validar_existencia_archivo_materiales():
+        messagebox.showerror("Error", "No se ha encontrado el archivo de materiales, por favor contacte al administrador.")
+        return
     nombre = nombre_entry.get()
     unidad = unidad_combobox.get()
     valor = valor_entry.get()
