@@ -7,7 +7,7 @@ from catalogo_materiales import CatalogoMaterialesReciclaje
 from API import validar_carnet
 from gestion_transacciones import Transacciones
 from manejador_archivos import cargar_centros_acopio_desde_archivo
-from manejador_archivos import validar_existencia_archivo_transacciones
+from manejador_archivos import validar_existencia_archivo_transacciones, validar_existencia_archivo_Estudiantes
 
 
 transaccion = Transacciones()
@@ -18,6 +18,10 @@ def crear_transaccion(carnet_Entry, centro_combobox, materiales_ag, cantidad_Ent
     if not validar_existencia_archivo_transacciones():
         messagebox.showerror("Error", "El archivo transacciones.txt no existe, contacte al administrador.")
         return
+    if not validar_existencia_archivo_Estudiantes():
+        messagebox.showerror("Error", "El archivo estudiantes.txt no existe, contacte al administrador.")
+        return
+
     # Obtener los datos ingresados por el usuario
     numero_carnet = carnet_Entry.get()
     centro_acopio = centro_combobox.get()
